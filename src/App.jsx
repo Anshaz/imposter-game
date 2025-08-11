@@ -82,7 +82,7 @@ export default function App() {
       <div className="header">
         <div>
           <div className="h1">Imposter — pass the phone</div>
-          <div className="subtitle">Fast party game — React prototype</div>
+          <div className="subtitle">Fast party game</div>
         </div>
         <div className="muted">Players: {players} • Imposters: {imposters}</div>
       </div>
