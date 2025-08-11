@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import words from './words.json'
 import './index.css'
 
+// 'test commit'
 function shuffle(arr) {
   const a = arr.slice()
   for (let i = a.length - 1; i > 0; i--) {
