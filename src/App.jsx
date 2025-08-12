@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import words from './words.json'
 import './index.css'
 
-// 'test commit'
+// Shuffle helper
 function shuffle(arr) {
   const a = arr.slice()
   for (let i = a.length - 1; i > 0; i--) {
@@ -15,7 +15,9 @@ function shuffle(arr) {
 export default function App() {
   const [players, setPlayers] = useState(6)
   const [imposters, setImposters] = useState(2)
-  const [deck, setDeck] = useState(null)
+  const [names, setNames] = useState(Array(6).fill(''))
+  const [assignments, setAssignments] = useState(null) // array of { name, role }
+  const [revealOrder, setRevealOrder] = useState([])
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState('config') // config | countdown | reveal | done
   const [countdown, setCountdown] = useState(3)
@@ -27,19 +29,39 @@ export default function App() {
     }
   }, [])
 
+  function handleNameChange(i, value) {
+    const updated = [...names]
+    updated[i] = value
+    setNames(updated)
+  }
+
   function prepareGame() {
     if (players < 2) return alert('Players must be at least 2')
     if (imposters < 1) return alert('Imposters at least 1')
     if (imposters >= players) return alert('Imposters must be less than players')
+    if (names.slice(0, players).some((n) => !n.trim())) {
+      return alert('Please enter all player names')
+    }
 
-    // pick one random word
+    // Pick one random word
     const chosen = words[Math.floor(Math.random() * words.length)]
-    // build deck: chosen repeated (players - imposters) and 'Imposter' repeated imposters
-    const arr = []
-    for (let i = 0; i < players - imposters; i++) arr.push(chosen)
-    for (let i = 0; i < imposters; i++) arr.push('Imposter')
-    const shuffled = shuffle(arr)
-    setDeck(shuffled)
+
+    // Create roles array
+    const roles = []
+    for (let i = 0; i < players - imposters; i++) roles.push(chosen)
+    for (let i = 0; i < imposters; i++) roles.push('Imposter')
+    const shuffledRoles = shuffle(roles)
+
+    // Assign roles to names
+    const playerAssignments = names.slice(0, players).map((name, i) => ({
+      name,
+      role: shuffledRoles[i],
+    }))
+
+    // Create a reveal order separate from assignments
+    const order = shuffle([...Array(players).keys()]) // array of indices
+    setAssignments(playerAssignments)
+    setRevealOrder(order)
     setIndex(0)
     setPhase('countdown')
     setCountdown(3)
@@ -62,7 +84,7 @@ export default function App() {
   }
 
   function nextPlayer() {
-    if (index + 1 >= (deck?.length || 0)) {
+    if (index + 1 >= revealOrder.length) {
       setPhase('done')
       return
     }
@@ -73,7 +95,8 @@ export default function App() {
   }
 
   function restart() {
-    setDeck(null)
+    setAssignments(null)
+    setRevealOrder([])
     setIndex(0)
     setPhase('config')
   }
@@ -85,7 +108,9 @@ export default function App() {
           <div className="h1">Imposter — pass the phone</div>
           <div className="subtitle">Fast party game</div>
         </div>
-        <div className="muted">Players: {players} • Imposters: {imposters}</div>
+        <div className="muted">
+          Players: {players} • Imposters: {imposters}
+        </div>
       </div>
 
       {phase === 'config' && (
@@ -96,7 +121,15 @@ export default function App() {
               type="number"
               min="2"
               value={players}
-              onChange={(e) => setPlayers(Number(e.target.value))}
+              onChange={(e) => {
+                const val = Number(e.target.value)
+                setPlayers(val)
+                setNames((prev) => {
+                  const arr = [...prev]
+                  while (arr.length < val) arr.push('')
+                  return arr
+                })
+              }}
             />
           </div>
           <div className="input">
@@ -109,6 +142,19 @@ export default function App() {
             />
           </div>
 
+          <div style={{ marginTop: 8 }}>
+            {Array.from({ length: players }, (_, i) => (
+              <div key={i} className="input">
+                <label>Player {i + 1} name</label>
+                <input
+                  type="text"
+                  value={names[i] || ''}
+                  onChange={(e) => handleNameChange(i, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+
           <div style={{ marginTop: 8 }} className="row">
             <button className="btn primary" onClick={prepareGame}>
               Start Game
@@ -118,6 +164,7 @@ export default function App() {
               onClick={() => {
                 setPlayers(6)
                 setImposters(2)
+                setNames(Array(6).fill(''))
               }}
             >
               Reset Defaults
@@ -131,10 +178,12 @@ export default function App() {
         </div>
       )}
 
-      {phase === 'countdown' && (
+      {phase === 'countdown' && assignments && (
         <div className="stage">
           <div className="card fullscreen">
-            <div className="muted">Player {index + 1} — Get ready</div>
+            <div className="muted">
+              {assignments[revealOrder[index]].name} — Get ready
+            </div>
             <div style={{ height: 12 }} />
             <div className="countdown">{countdown}</div>
             <div style={{ height: 18 }} />
@@ -142,12 +191,13 @@ export default function App() {
           </div>
 
           <div className="footer">
-            <div className="muted">Cards left: {deck ? deck.length - index : 0}</div>
+            <div className="muted">
+              Cards left: {revealOrder.length - index}
+            </div>
             <div className="center">
               <button
                 className="btn ghost"
                 onClick={() => {
-                  // allow skipping the countdown to reveal early (convenience)
                   if (countdownRef.current) clearInterval(countdownRef.current)
                   setPhase('reveal')
                 }}
@@ -159,69 +209,80 @@ export default function App() {
         </div>
       )}
 
-      {phase === 'reveal' && (
+      {phase === 'reveal' && assignments && (
         <div className="stage">
           <div className="card fullscreen">
-            <div className="muted">Player {index + 1}</div>
+            <div className="muted">
+              {assignments[revealOrder[index]].name}
+            </div>
             <div style={{ height: 16 }} />
-            <div className="big">{deck[index]}</div>
+            <div className="big">{assignments[revealOrder[index]].role}</div>
             <div style={{ height: 8 }} />
             <div className="muted">
-              {deck[index] === 'Imposter' ? 'You are the imposter' : 'You are not the imposter'}
+              {assignments[revealOrder[index]].role === 'Imposter'
+                ? 'You are the imposter'
+                : 'You are not the imposter'}
             </div>
             <div style={{ height: 18 }} />
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn primary" onClick={nextPlayer}>
                 Next Player
               </button>
-              <button
-                className="btn ghost"
-                onClick={() => {
-                  // reveal again (convenience)
-                }}
-              >
-                Hold (do nothing)
-              </button>
+              <button className="btn ghost">Hold (do nothing)</button>
             </div>
           </div>
 
           <div className="footer">
-            <div className="muted">Index: {index + 1}/{deck.length}</div>
+            <div className="muted">
+              Reveal {index + 1}/{revealOrder.length}
+            </div>
             <div />
           </div>
         </div>
       )}
 
-      {phase === 'done' && (
-        <div className="card">
-          <div className="big">All done 🎉</div>
-          <div className="muted">Everyone has seen their card.</div>
-          <div style={{ height: 12 }} />
-          <div className="row">
-            <button
-              className="btn primary"
-              onClick={() => {
-                // allow replay with same deck (reshuffle new deck on restart if needed)
-                restart()
-              }}
-            >
-              Play again
-            </button>
-            <button
-              className="btn ghost"
-              onClick={() => {
-                // keep the same deck and restart order
-                setIndex(0)
-                setPhase('countdown')
-                setCountdown(3)
-                startCountdown()
-              }}
-            >
-              Replay same deck
-            </button>
-          </div>
-        </div>
-      )}
+{phase === 'done' && assignments && (
+  <div className="card">
+    <div className="big">All done 🎉</div>
+    <div className="muted">Everyone has seen their card.</div>
+    <div style={{ height: 12 }} />
+
+    <div className="row">
+      <button className="btn primary" onClick={restart}>
+        Play again
+      </button>
+      <button
+        className="btn ghost"
+        onClick={() => {
+          setIndex(0)
+          setPhase('countdown')
+          setCountdown(3)
+          startCountdown()
+        }}
+      >
+        Replay same deck
+      </button>
+    </div>
+
+    <div style={{ marginTop: 12 }}>
+      <button
+        className="btn ghost"
+        onClick={() => {
+          const impostersList = assignments
+            .filter((p) => p.role === 'Imposter')
+            .map((p) => p.name)
+          const word = assignments.find((p) => p.role !== 'Imposter')?.role
+          alert(
+            `Imposters: ${impostersList.join(', ')}\nWord: ${word || 'Unknown'}`
+          )
+        }}
+      >
+        Show Results
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   )
 }
