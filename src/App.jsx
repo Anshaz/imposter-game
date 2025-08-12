@@ -13,9 +13,9 @@ function shuffle(arr) {
 }
 
 export default function App() {
-  const [players, setPlayers] = useState(6)
-  const [imposters, setImposters] = useState(2)
-  const [names, setNames] = useState(Array(6).fill(''))
+  const [players, setPlayers] = useState(2)
+  const [imposters, setImposters] = useState(1)
+  const [names, setNames] = useState(Array(2).fill(''))
   const [assignments, setAssignments] = useState(null) // array of { name, role }
   const [revealOrder, setRevealOrder] = useState([])
   const [index, setIndex] = useState(0)
@@ -64,24 +64,24 @@ export default function App() {
     setRevealOrder(order)
     setIndex(0)
     setPhase('countdown')
-    setCountdown(3)
-    startCountdown()
+    setCountdown(5)
+    // startCountdown()
   }
 
-  function startCountdown() {
-    if (countdownRef.current) clearInterval(countdownRef.current)
-    setCountdown(3)
-    let t = 3
-    countdownRef.current = setInterval(() => {
-      t -= 1
-      if (t <= 0) {
-        clearInterval(countdownRef.current)
-        setPhase('reveal')
-      } else {
-        setCountdown(t)
-      }
-    }, 1000)
-  }
+  // function startCountdown() {
+  //   if (countdownRef.current) clearInterval(countdownRef.current)
+  //   setCountdown(5)
+  //   let t = 5
+  //   countdownRef.current = setInterval(() => {
+  //     t -= 1
+  //     if (t <= 0) {
+  //       clearInterval(countdownRef.current)
+  //       setPhase('reveal')
+  //     } else {
+  //       setCountdown(t)
+  //     }
+  //   }, 1000)
+  // }
 
   function nextPlayer() {
     if (index + 1 >= revealOrder.length) {
@@ -106,10 +106,6 @@ export default function App() {
       <div className="header">
         <div>
           <div className="h1">Imposter — pass the phone</div>
-          <div className="subtitle">Fast party game</div>
-        </div>
-        <div className="muted">
-          Players: {players} • Imposters: {imposters}
         </div>
       </div>
 
@@ -162,9 +158,9 @@ export default function App() {
             <button
               className="btn ghost"
               onClick={() => {
-                setPlayers(6)
-                setImposters(2)
-                setNames(Array(6).fill(''))
+                setPlayers(2)
+                setImposters(1)
+                setNames(Array(2).fill(''))
               }}
             >
               Reset Defaults
@@ -185,26 +181,36 @@ export default function App() {
               {assignments[revealOrder[index]].name} — Get ready
             </div>
             <div style={{ height: 12 }} />
-            <div className="countdown">{countdown}</div>
-            <div style={{ height: 18 }} />
-            <div className="muted">Pass the phone while the counter runs</div>
-          </div>
-
-          <div className="footer">
-            <div className="muted">
-              Cards left: {revealOrder.length - index}
-            </div>
             <div className="center">
               <button
                 className="btn ghost"
                 onClick={() => {
-                  if (countdownRef.current) clearInterval(countdownRef.current)
+                  // if (countdownRef.current) clearInterval(countdownRef.current)
                   setPhase('reveal')
                 }}
               >
                 Reveal Now
               </button>
             </div>
+            <div style={{ height: 18 }} />
+            <div className="muted">Click on Reveal Now to find out</div>
+          </div>
+
+          <div className="footer">
+            <div className="muted">
+              Cards left: {revealOrder.length - index}
+            </div>
+            {/* <div className="center">
+              <button
+                className="btn ghost"
+                onClick={() => {
+                  // if (countdownRef.current) clearInterval(countdownRef.current)
+                  setPhase('reveal')
+                }}
+              >
+                Reveal Now
+              </button>
+            </div> */}
           </div>
         </div>
       )}
@@ -228,8 +234,8 @@ export default function App() {
               <button className="btn primary" onClick={nextPlayer}>
                 Next Player
               </button>
-              <button className="btn ghost">Hold (do nothing)</button>
             </div>
+            <div className="muted">Click to hide and pass on to the next player</div>
           </div>
 
           <div className="footer">
@@ -245,6 +251,7 @@ export default function App() {
   <div className="card">
     <div className="big">All done 🎉</div>
     <div className="muted">Everyone has seen their card.</div>
+      <div className="muted">Now put the phone down and find the imposter</div>
     <div style={{ height: 12 }} />
 
     <div className="row">
