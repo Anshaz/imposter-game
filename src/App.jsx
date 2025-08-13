@@ -183,7 +183,7 @@ export default function App() {
             <div style={{ height: 12 }} />
             <div className="center">
               <button
-                className="btn ghost"
+                className="btn primary"
                 onClick={() => {
                   // if (countdownRef.current) clearInterval(countdownRef.current)
                   setPhase('reveal')
