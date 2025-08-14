@@ -168,7 +168,7 @@ export default function App() {
           </div>
 
           <div style={{ marginTop: 12 }} className="muted">
-            Words loaded: {words.length}. The app picks one random word per round and
+            Words loaded. The app picks one random word per round and
             places imposters among players.
           </div>
         </div>
