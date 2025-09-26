@@ -22,6 +22,8 @@ export default function App() {
   const [phase, setPhase] = useState('config') // config | countdown | reveal | done
   const [countdown, setCountdown] = useState(3)
   const countdownRef = useRef(null)
+const [errorMessage, setErrorMessage] = useState('')
+const [showError, setShowError] = useState(false)
 
   useEffect(() => {
     return () => {
@@ -35,13 +37,27 @@ export default function App() {
     setNames(updated)
   }
 
-  function prepareGame() {
-    if (players < 2) return alert('Players must be at least 2')
-    if (imposters < 1) return alert('Imposters at least 1')
-    if (imposters >= players) return alert('Imposters must be less than players')
-    if (names.slice(0, players).some((n) => !n.trim())) {
-      return alert('Please enter all player names')
-    }
+function prepareGame() {
+  if (players < 2) {
+    setErrorMessage('Players must be at least 2')
+    setShowError(true)
+    return
+  }
+  if (imposters < 1) {
+    setErrorMessage('Imposters must be at least 1')
+    setShowError(true)
+    return
+  }
+  if (imposters >= players) {
+    setErrorMessage('Imposters must be less than players')
+    setShowError(true)
+    return
+  }
+  if (names.slice(0, players).some((n) => !n.trim())) {
+    setErrorMessage('Player names cannot be empty')
+    setShowError(true)
+    return
+  }
 
     // Pick one random word
     const chosen = words[Math.floor(Math.random() * words.length)]
@@ -150,7 +166,41 @@ export default function App() {
               </div>
             ))}
           </div>
-
+{showError && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,0.6)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        background: '#0b1220',
+        padding: '20px',
+        borderRadius: '8px',
+        maxWidth: '300px',
+        textAlign: 'center',
+      }}
+    >
+      <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>Error</div>
+      <div style={{ marginBottom: '16px' }}>{errorMessage}</div>
+      <button
+        className="btn primary"
+        onClick={() => setShowError(false)}
+      >
+        OK
+      </button>
+    </div>
+  </div>
+)}
           <div style={{ marginTop: 8 }} className="row">
             <button className="btn primary" onClick={prepareGame}>
               Start Game
