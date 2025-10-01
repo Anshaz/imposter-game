@@ -253,8 +253,8 @@ function prepareGame(chosenWord = null) {
         onChange={(e) => setCustomWord(e.target.value)}
       />
       <button
-        style={{ marginLeft: 8 }}
-        className="btn ghost"
+        style={{ marginLeft: 8, marginTop: 8 }}
+        className="btn primary"
         onClick={() => {
           if (!customWord.trim()) {
             setDialogTitle('Error')
@@ -265,7 +265,7 @@ function prepareGame(chosenWord = null) {
           prepareGame(customWord) // pass custom word directly
         }}
       >
-        Use This Word
+        Use Custom Word
       </button>
 
     </div>
