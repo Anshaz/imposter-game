@@ -65,7 +65,7 @@ export default function WordScreen({ state, actions }) {
           />
 
           <button type="button" className="btn primary" onClick={() => actions.startCustom(custom)} disabled={!canUseCustom}>
-            Use custom word
+            Start with custom word
           </button>
         </div>
       </div>
