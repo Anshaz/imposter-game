@@ -64,7 +64,7 @@ export default function SetupScreen({ state, actions }) {
             <span className="knob" />
           </button>
           <div className="toggleText">
-            <label>Surprise mode: Imposter Count Random</label>
+            <label>Surprise mode</label>
           </div>
         </div>
       </div>

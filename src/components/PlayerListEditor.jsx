@@ -25,7 +25,6 @@ export default function PlayerListEditor({ players, names, onChangeName }) {
               <input
                 type="text"
                 value={n}
-                placeholder={`Name for player ${i + 1}`}
                 onChange={(e) => onChangeName(i, e.target.value)}
               />
             </div>

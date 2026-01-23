@@ -32,11 +32,6 @@ export default function RevealScreen({ derived, actions }) {
           Tap “Hide & pass” before handing the phone to the next player.
         </div>
       </div>
-
-      <div className="footer">
-        <div className="muted">Reveal {derived.total - derived.remaining + 1}/{derived.total}</div>
-        <div />
-      </div>
     </div>
   )
 }

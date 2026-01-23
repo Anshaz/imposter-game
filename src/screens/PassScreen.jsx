@@ -21,13 +21,6 @@ export default function PassScreen({ derived, actions }) {
       </div>
 
       <div className="footer">
-        <div className="muted">Remaining: {derived.remaining}</div>
-        <button type="button" className="btn ghost small" onClick={() => actions.openDialog({
-          title: 'Quick tip',
-          message: 'Hold the phone close to your face, and angle it slightly down to avoid shoulder-surfing.',
-        })}>
-          Tip
-        </button>
       </div>
     </div>
   )

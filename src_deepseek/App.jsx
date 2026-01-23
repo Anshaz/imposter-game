@@ -337,9 +337,6 @@ export default function App() {
           </div>
 
           <div className="footer">
-            <div className="muted">
-              Reveal {index + 1}/{revealOrder.length}
-            </div>
             <div />
           </div>
         </div>
