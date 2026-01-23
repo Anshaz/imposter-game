@@ -23,7 +23,7 @@ export default function AppShell({ phase, children, onReset }) {
       <main>{children}</main>
 
       <footer className="tiny">
-        Tip: turn the phone brightness down a bit and keep it close to your face while revealing.
+        © 2026 Anshaj Upadhyaya
       </footer>
     </div>
   )

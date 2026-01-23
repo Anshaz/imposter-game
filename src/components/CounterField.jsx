@@ -1,30 +1,52 @@
 import React from 'react'
 
-export default function CounterField({ label, value, min = 0, max = 999, onChange, hint, disabled = false }) {
-  const dec = () => { if (!disabled) onChange(Math.max(min, value - 1)) }
-  const inc = () => { if (!disabled) onChange(Math.min(max, value + 1)) }
+export default function CounterField({
+  label,
+  value,
+  displayValue, // <- NEW (string/number)
+  min = 0,
+  max = 999,
+  onChange,
+  hint,
+  disabled = false,
+}) {
+  const dec = () => !disabled && onChange(Math.max(min, Number(value) - 1))
+  const inc = () => !disabled && onChange(Math.min(max, Number(value) + 1))
+
+  const shown = displayValue ?? value
 
   return (
-    <div className="input">
-      <label>{label}</label>
-      <div className="counter">
-        <button type="button" className="iconBtn" onClick={dec} aria-label={`Decrease ${label}`} disabled={disabled || value <= min}>
+    <div className={'counterField' + (disabled ? ' counterField--locked' : '')}>
+      <div className="counterField__labelRow">
+        <label className="counterField__label">{label}</label>
+      </div>
+
+      <div className="counterField__row" aria-disabled={disabled}>
+        <button
+          className="counterField__btn"
+          type="button"
+          onClick={dec}
+          disabled={disabled || value <= min}
+        >
           −
         </button>
-        <input
-          type="number"
-          min={min}
-          max={max}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          aria-label={label}
-          disabled={disabled}
-        />
-        <button type="button" className="iconBtn" onClick={inc} aria-label={`Increase ${label}`} disabled={disabled || value >= max}>
+
+        <div className="counterField__valueWrap">
+          <div className="counterField__value">{shown}</div>
+          {disabled ? <div className="counterField__sub">🔒</div> : null}
+        </div>
+
+        <button
+          className="counterField__btn"
+          type="button"
+          onClick={inc}
+          disabled={disabled || value >= max}
+        >
           +
         </button>
       </div>
-      {hint ? <div className="hint">{hint}</div> : null}
+
+      {hint ? <div className="counterField__hint">{hint}</div> : null}
     </div>
   )
 }

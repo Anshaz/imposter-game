@@ -724,7 +724,7 @@ select:focus {
 
 .toggle {
   position: relative;
-  width: 60px;
+  width: 45px;
   height: 28px;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.25);
@@ -766,3 +766,101 @@ select:focus {
   font-size: 0.95rem;
   line-height: 1.35;
 }
+
+/* --- CounterField (scoped) --- */
+.counterField {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.counterField__labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.counterField__label {
+  font-weight: 600;
+}
+
+.counterField__row {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  gap: 10px;
+  align-items: center;
+}
+
+.counterField__btn {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.counterField__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.counterField__valueWrap {
+  min-height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  display: grid;
+  place-items: center;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.counterField__value {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.counterField__sub {
+  margin-top: 3px;
+  font-size: 12px;
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.counterField__hint {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* Locked look (Surprise mode ON) */
+.counterField--locked .counterField__row {
+  opacity: 0.55;
+  filter: grayscale(0.25);
+}
+
+.counterField--locked .counterField__valueWrap {
+  background: rgba(255, 255, 255, 0.03);
+  border-style: dashed;
+}
+
+.counterField__lockPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0.85;
+}
+
+.counterField__lockIcon {
+  font-size: 13px;
+  line-height: 1;
+}
+
