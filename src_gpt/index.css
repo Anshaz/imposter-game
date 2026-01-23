@@ -207,10 +207,6 @@ body::before {
   gap: 10px;
 }
 
-.selectField {
-  background-color: rebeccapurple;
-}
-
 .input label,
 .playerLabel,
 .sectionTitle {
@@ -232,8 +228,7 @@ body::before {
 }
 
 input[type='number'],
-input[type='text'],
-select {
+input[type='text'] {
   padding: 14px 16px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.1);
@@ -246,31 +241,8 @@ select {
   outline: none;
 }
 
-
-
-/* Select (dropdown) styling */
-select {
-  cursor: pointer;
-  padding-right: 44px;
-  -webkit-appearance: none;
-  appearance: none;
-  background-image:
-    linear-gradient(45deg, transparent 50%, rgba(248, 250, 252, 0.7) 50%),
-    linear-gradient(135deg, rgba(248, 250, 252, 0.7) 50%, transparent 50%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
-  background-position:
-    calc(100% - 22px) 20px,
-    calc(100% - 16px) 20px,
-    calc(100% - 44px) 50%;
-  background-size:
-    6px 6px,
-    6px 6px,
-    1px 28px;
-  background-repeat: no-repeat;
-}
 input[type='number']:focus,
-input[type='text']:focus,
-select:focus {
+input[type='text']:focus {
   border-color: var(--accent);
   background: rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 0 3px var(--accent-glow);
