@@ -17,6 +17,7 @@ const initialState = {
   names: ['', ''],
   customWord: '',
   packId: 'all',
+  surpriseMode: false,
   deck: null,
   ui: {
     dialog: null, // { title, message, actions?: [{label, variant, onClickId}] }
@@ -35,7 +36,7 @@ function reducer(state, action) {
     case 'SET_PLAYERS': {
       const players = clampInt(action.value, 2, 20)
       const names = ensureNamesLength(state.names, players)
-      const imposters = clampInt(state.imposters, 1, players - 1)
+      const imposters = clampInt(state.imposters, 1, players)
       return {
         ...state,
         players,
@@ -46,7 +47,7 @@ function reducer(state, action) {
     }
 
     case 'SET_IMPOSTERS': {
-      const imposters = clampInt(action.value, 1, Math.max(1, state.players - 1))
+      const imposters = clampInt(action.value, 1, Math.max(1, state.players))
       return { ...state, imposters, ui: { ...state.ui, setupError: null } }
     }
 
@@ -56,7 +57,15 @@ function reducer(state, action) {
       return { ...state, names, ui: { ...state.ui, setupError: null } }
     }
 
-    case 'SET_CUSTOM_WORD':
+    
+    case 'SET_SURPRISE': {
+      const enabled = !!action.value
+      // Reset imposters to a safe default when enabling Surprise mode.
+      const imposters = enabled ? 1 : clampInt(state.imposters, 1, state.players)
+      return { ...state, surpriseMode: enabled, imposters, ui: { ...state.ui, setupError: null } }
+    }
+
+case 'SET_CUSTOM_WORD':
       return { ...state, customWord: action.value }
 
     case 'SET_PACK':
@@ -73,9 +82,12 @@ function reducer(state, action) {
       if (err) return { ...state, ui: { ...state.ui, setupError: err } }
 
       const word = pickWord({ customWord: action.customWord ?? '', words: getWordsForPack(state.packId) })
+      const imposters =
+        state.surpriseMode ? 1 + Math.floor(Math.random() * state.players) : state.imposters
+
       const deck = buildDeck({
         players: state.players,
-        imposters: state.imposters,
+        imposters,
         names: state.names,
         word,
       })
@@ -144,6 +156,7 @@ export function useImposterGame() {
       setName: (index, value) => dispatch({ type: 'SET_NAME', index, value }),
       setCustomWord: (value) => dispatch({ type: 'SET_CUSTOM_WORD', value }),
       setPack: (value) => dispatch({ type: 'SET_PACK', value }),
+      setSurpriseMode: (value) => dispatch({ type: 'SET_SURPRISE', value }),
       goWord: () => dispatch({ type: 'GO_WORD' }),
       goSetup: () => dispatch({ type: 'GO_SETUP' }),
       startRandom: () => dispatch({ type: 'START_GAME', customWord: '' }),

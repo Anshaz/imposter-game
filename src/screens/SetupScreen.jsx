@@ -29,10 +29,32 @@ export default function SetupScreen({ state, actions }) {
         label="Imposters"
         value={state.imposters}
         min={1}
-        max={Math.max(1, state.players - 1)}
+        max={Math.max(1, state.players)}
         onChange={actions.setImposters}
-        hint="Usually 1 imposter for 4–6 players."
+        disabled={state.surpriseMode}
+        hint={
+          state.surpriseMode
+            ? `Surprise mode: randomized each round (1–${state.players}).`
+            : "Pick how many imposters are in the round."
+        }
+        
       />
+      <div className="input">
+        <label className="surpriseMode">Surprise mode: {state.surpriseMode ? "ON" : "OFF"}</label>
+        <div className="toggleRow">
+          <button
+            type="button"
+            className={"toggle" + (state.surpriseMode ? " on" : "")}
+            onClick={() => actions.setSurpriseMode(!state.surpriseMode)}
+            aria-pressed={state.surpriseMode}
+          >
+            <span className="knob" />
+          </button>
+          <div className="toggleText">
+            Randomize imposters each round (1–{state.players}). The imposter input will be locked.
+          </div>
+        </div>
+      </div>
 
       <div className="sectionTitle">Player names</div>
       <PlayerListEditor players={state.players} names={state.names} onChangeName={actions.setName} />
@@ -54,6 +76,7 @@ export default function SetupScreen({ state, actions }) {
           type="button"
           onClick={() => {
             actions.setPlayers(2)
+            actions.setSurpriseMode(false)
             actions.setImposters(1)
             actions.setName(0, '')
             actions.setName(1, '')

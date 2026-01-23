@@ -18,7 +18,7 @@ export function clampInt(n, min, max) {
 export function validateSetup({ players, imposters, names }) {
   if (players < 2) return 'Players must be at least 2.'
   if (imposters < 1) return 'Imposters must be at least 1.'
-  if (imposters >= players) return 'Imposters must be less than players.'
+  if (imposters > players) return 'Imposters must not exceed players.'
 
   const used = names.slice(0, players).map((n) => n.trim())
   if (used.some((n) => !n)) return 'Please enter all player names.'
