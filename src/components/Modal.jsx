@@ -15,10 +15,16 @@ export default function Modal({ open, title, message, actions = [], onClose }) {
   return (
     <div className="dialog-overlay" role="dialog" aria-modal="true" onMouseDown={onClose}>
       <div className="dialog-content" onMouseDown={(e) => e.stopPropagation()}>
-        <div className="dialog-title">{title}</div>
+        <div className="dialog-header">
+          <div className="dialog-title">{title}</div>
+          <button type="button" className="dialog-close" onClick={onClose} aria-label="Close dialog">
+            ✕
+          </button>
+        </div>
+
         <div className="dialog-message">{message}</div>
 
-        <div className="row" style={{ justifyContent: 'center' }}>
+        <div className="dialog-footer">
           {actions.length > 0 ? (
             actions.map((a, i) => (
               <button
@@ -32,7 +38,7 @@ export default function Modal({ open, title, message, actions = [], onClose }) {
             ))
           ) : (
             <button type="button" className="btn primary" onClick={onClose}>
-              OK
+              Close
             </button>
           )}
         </div>
