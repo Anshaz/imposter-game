@@ -86,9 +86,18 @@ export default function SetupScreen({ state, actions }) {
 
 
       {/* Modes (side-by-side) */}
-      <div className="modesGrid">
-        <div className="input" style={{ marginBottom: 0 }}>
-          <div className="toggleRow">
+      <div
+        className="modesGrid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 12,
+          alignItems: 'stretch',
+          width: '100%',
+        }}
+      >
+        <div className="input" style={{ marginBottom: 0, width: '100%' }}>
+          <div className="toggleRow" style={{ width: '100%' }}>
             <button
               type="button"
               className={'toggle' + (state.surpriseMode ? ' on' : '')}
@@ -104,8 +113,8 @@ export default function SetupScreen({ state, actions }) {
           </div>
         </div>
 
-        <div className="input" style={{ marginBottom: 0 }}>
-          <div className="toggleRow">
+        <div className="input" style={{ marginBottom: 0, width: '100%' }}>
+          <div className="toggleRow" style={{ width: '100%' }}>
             <button
               type="button"
               className={'toggle' + (state.tokenMode ? ' on' : '')}
@@ -135,7 +144,6 @@ export default function SetupScreen({ state, actions }) {
 
             <div className="toggleText">
               <label className="toggleTextSurprise">Token mode</label>
-
             </div>
           </div>
         </div>

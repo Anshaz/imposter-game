@@ -23,8 +23,8 @@ export default function WordScreen({ state, actions }) {
       <div className="cardTitle">Choose the word</div>
 
       <div className="choiceGrid">
-        <div className="choiceCard" style={{ cursor: 'default' }}>
-          <div className="choiceTitle">Random word</div>
+        <div className="choiceCard choiceCard--random" style={{ cursor: 'default' }}>
+          <div className="choiceTitle">Play With Random word</div>
           <div className="muted" style={{ marginBottom: 12 }}>
             Pick a pack for the vibe — then start.
           </div>
@@ -42,7 +42,7 @@ export default function WordScreen({ state, actions }) {
             }
           />
 
-          <button type="button" className="btn primary" onClick={actions.startRandom}>
+          <button type="button" className="btn primary btn--random" onClick={actions.startRandom}>
             Start with random word
           </button>
 
@@ -51,8 +51,8 @@ export default function WordScreen({ state, actions }) {
           </div>
         </div>
 
-        <div className="choiceCard" style={{ cursor: 'default' }}>
-          <div className="choiceTitle">Custom word</div>
+        <div className="choiceCard choiceCard--custom" style={{ cursor: 'default' }}>
+          <div className="choiceTitle">Play With Custom word</div>
           <div className="muted" style={{ marginBottom: 12 }}>
             Great for inside jokes. Keep it short.
           </div>
@@ -64,7 +64,7 @@ export default function WordScreen({ state, actions }) {
             placeholder="e.g., Pineapple, Tokyo, Guitar"
           />
 
-          <button type="button" className="btn primary" onClick={() => actions.startCustom(custom)} disabled={!canUseCustom}>
+          <button type="button" className="btn primary btn--custom" onClick={() => actions.startCustom(custom)} disabled={!canUseCustom}>
             Start with custom word
           </button>
         </div>

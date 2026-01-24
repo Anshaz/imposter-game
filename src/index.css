@@ -208,7 +208,7 @@ body::before {
 }
 
 .selectField {
-  background-color: rebeccapurple;
+  background-color: #3d3b3f;
 }
 
 .input label,
@@ -817,13 +817,81 @@ select:focus {
   margin: 10px 0 4px;
 }
 
+/* Word screen: differentiate Random vs Custom cards */
+.choiceCard--random {
+  background: rgba(80, 160, 255, 0.10);
+  /* cool blue tint */
+  border: 1px solid rgba(80, 160, 255, 0.22);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+}
+
+.choiceCard--random::before {
+  content: "";
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  background: rgba(80, 160, 255, 0.65);
+}
+
+.choiceCard--custom {
+  background: rgba(255, 170, 80, 0.10);
+  /* warm orange tint */
+  border: 1px solid rgba(255, 170, 80, 0.22);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+}
+
+.choiceCard--custom::before {
+  content: "";
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  background: rgba(255, 170, 80, 0.65);
+}
+
+/* Optional: slightly different primary button emphasis inside each card */
+.choiceCard--random .btn.primary {
+  border-color: rgba(80, 160, 255, 0.35);
+}
+
+.choiceCard--custom .btn.primary {
+  border-color: rgba(255, 170, 80, 0.35);
+}
+
+/* Word screen: different button looks */
+.btn--random {
+  background: rgba(80, 160, 255, 0.18) !important;
+  border: 1px solid rgba(80, 160, 255, 0.40) !important;
+}
+
+.btn--random:hover {
+  background: rgba(80, 160, 255, 0.26) !important;
+}
+
+.btn--custom {
+  background: rgba(255, 170, 80, 0.18) !important;
+  border: 1px solid rgba(255, 170, 80, 0.42) !important;
+}
+
+.btn--custom:hover {
+  background: rgba(255, 170, 80, 0.26) !important;
+}
+
+/* Keep disabled state consistent */
+.btn--random:disabled,
+.btn--custom:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+
 /* On phones: stack nicely */
 @media (max-width: 520px) {
   .modesGrid {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* Phone/coarse pointer tuning:
    - keep visuals slim (don’t make it huge)

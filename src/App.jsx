@@ -7,6 +7,7 @@ import WordScreen from './screens/WordScreen'
 import PassScreen from './screens/PassScreen'
 import RevealScreen from './screens/RevealScreen'
 import DoneScreen from './screens/DoneScreen'
+import DiscussScreen from './screens/DiscussScreen'
 
 export default function App() {
   const { state, derived, actions } = useImposterGame()
@@ -35,6 +36,7 @@ export default function App() {
       {state.phase === PHASE.WORD && <WordScreen state={state} actions={actions} />}
       {state.phase === PHASE.PASS && <PassScreen derived={derived} actions={actions} />}
       {state.phase === PHASE.REVEAL && <RevealScreen derived={derived} actions={actions} />}
+      {state.phase === PHASE.DISCUSS && <DiscussScreen derived={derived} actions={actions} />}
       {state.phase === PHASE.DONE && <DoneScreen derived={derived} actions={actions} />}
 
       <Modal
@@ -45,5 +47,6 @@ export default function App() {
         onClose={actions.closeDialog}
       />
     </AppShell>
+
   )
 }

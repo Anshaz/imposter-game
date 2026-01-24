@@ -94,7 +94,7 @@ export default function RevealScreen({ derived, actions }) {
               <div className="muted" style={{ marginTop: 6 }}>
                 {token.description}
               </div>
-              <div className="muted" style={{ marginTop: 6, fontWeight: 600 }}>
+              <div className="muted" style={{ marginTop: 6, fontWeight: 600, color: '#7fff00' }}>
                 {token.instruction}
               </div>
             </div>

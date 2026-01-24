@@ -7,6 +7,7 @@ export const PHASE = {
   WORD: 'word',
   PASS: 'pass',
   REVEAL: 'reveal',
+  DISCUSS: 'discuss',
   DONE: 'done',
 }
 
@@ -114,10 +115,12 @@ function reducer(state, action) {
       if (!state.deck) return state
       const cursor = state.deck.cursor + 1
       if (cursor >= state.deck.revealOrder.length) {
-        return { ...state, phase: PHASE.DONE, deck: { ...state.deck, cursor } }
+        return { ...state, phase: PHASE.DISCUSS, deck: { ...state.deck, cursor } }
       }
       return { ...state, phase: PHASE.PASS, deck: { ...state.deck, cursor } }
     }
+    case 'VIEW_RESULTS':
+      return { ...state, phase: PHASE.DONE }
 
     case 'REPLAY_DECK': {
       if (!state.deck) return state
@@ -172,6 +175,7 @@ export function useImposterGame() {
       startCustom: (customWord) => dispatch({ type: 'START_GAME', customWord }),
       reveal: () => dispatch({ type: 'REVEAL' }),
       next: () => dispatch({ type: 'NEXT' }),
+      viewResults: () => dispatch({ type: 'VIEW_RESULTS' }),
       replayDeck: () => dispatch({ type: 'REPLAY_DECK' }),
       newRound: () => dispatch({ type: 'NEW_ROUND' }),
       openDialog: (payload) => dispatch({ type: 'OPEN_DIALOG', payload }),
