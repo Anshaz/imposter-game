@@ -18,6 +18,7 @@ const initialState = {
   customWord: '',
   packId: 'all',
   surpriseMode: false,
+  tokenMode: false,
   deck: null,
   ui: {
     dialog: null, // { title, message, actions?: [{label, variant, onClickId}] }
@@ -57,7 +58,6 @@ function reducer(state, action) {
       return { ...state, names, ui: { ...state.ui, setupError: null } }
     }
 
-    
     case 'SET_SURPRISE': {
       const enabled = !!action.value
       // Reset imposters to a safe default when enabling Surprise mode.
@@ -65,7 +65,12 @@ function reducer(state, action) {
       return { ...state, surpriseMode: enabled, imposters, ui: { ...state.ui, setupError: null } }
     }
 
-case 'SET_CUSTOM_WORD':
+    case 'SET_TOKEN_MODE': {
+      const enabled = !!action.value
+      return { ...state, tokenMode: enabled, ui: { ...state.ui, setupError: null } }
+    }
+
+    case 'SET_CUSTOM_WORD':
       return { ...state, customWord: action.value }
 
     case 'SET_PACK':
@@ -82,14 +87,16 @@ case 'SET_CUSTOM_WORD':
       if (err) return { ...state, ui: { ...state.ui, setupError: err } }
 
       const word = pickWord({ customWord: action.customWord ?? '', words: getWordsForPack(state.packId) })
-      const imposters =
-        state.surpriseMode ? 1 + Math.floor(Math.random() * state.players) : state.imposters
+      const imposters = state.surpriseMode
+        ? 1 + Math.floor(Math.random() * state.players)
+        : state.imposters
 
       const deck = buildDeck({
         players: state.players,
         imposters,
         names: state.names,
         word,
+        tokenMode: state.tokenMode,
       })
 
       return {
@@ -146,8 +153,9 @@ export function useImposterGame() {
       remaining,
       total,
       results: getResults(deck),
+      tokenMode: deck?.tokenMode ?? state.tokenMode,
     }
-  }, [state.deck])
+  }, [state.deck, state.tokenMode])
 
   const actions = useMemo(
     () => ({
@@ -157,6 +165,7 @@ export function useImposterGame() {
       setCustomWord: (value) => dispatch({ type: 'SET_CUSTOM_WORD', value }),
       setPack: (value) => dispatch({ type: 'SET_PACK', value }),
       setSurpriseMode: (value) => dispatch({ type: 'SET_SURPRISE', value }),
+      setTokenMode: (value) => dispatch({ type: 'SET_TOKEN_MODE', value }),
       goWord: () => dispatch({ type: 'GO_WORD' }),
       goSetup: () => dispatch({ type: 'GO_SETUP' }),
       startRandom: () => dispatch({ type: 'START_GAME', customWord: '' }),

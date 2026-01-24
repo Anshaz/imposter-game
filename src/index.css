@@ -803,6 +803,28 @@ select:focus {
   line-height: 1.25;
 }
 
+.toggleTextSurprise {
+  font-size: 12px !important;
+  opacity: 0.85;
+  line-height: 1.25;
+}
+
+/* Modes row (two toggles side-by-side) */
+.modesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 10px 0 4px;
+}
+
+/* On phones: stack nicely */
+@media (max-width: 520px) {
+  .modesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 /* Phone/coarse pointer tuning:
    - keep visuals slim (don’t make it huge)
    - increase hit area a bit more

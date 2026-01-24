@@ -7,6 +7,34 @@ import { validateSetup } from '../lib/game'
 export default function SetupScreen({ state, actions }) {
   const maxPlayers = 20
   const [howOpen, setHowOpen] = useState(false)
+  const TOKEN_MODE_INFO = (
+    <div style={{ display: 'grid', gap: 10, textAlign: 'left' }}>
+      <p className="muted" style={{ margin: 0 }}>
+        Token mode adds special roles on top of the Imposter/Civilian roles.
+      </p>
+
+      <div style={{ display: 'grid', gap: 8 }}>
+        <div>
+          <b>🕵️ Detective</b> — asks <b>1 extra question</b> at the end of the round.
+          <div className="muted">Announce this role to everyone during your reveal.</div>
+        </div>
+
+        <div>
+          <b>🐭 Quiet Mouse</b> — may <b>silently pass once</b> in the first round.
+          <div className="muted">Announce this role to everyone during your reveal.</div>
+        </div>
+
+        <div>
+          <b>🦊 Fox</b> — <b>wins if voted out</b>.
+          <div className="muted">Keep this role secret.</div>
+        </div>
+      </div>
+
+      <p className="muted" style={{ margin: 0 }}>
+        Tip: Fox should still try to blend in—getting voted out is their win condition.
+      </p>
+    </div>
+  )
 
   const setupError = useMemo(() => {
     return validateSetup({ players: state.players, imposters: state.imposters, names: state.names })
@@ -33,7 +61,12 @@ export default function SetupScreen({ state, actions }) {
         min={2}
         max={maxPlayers}
         onChange={actions.setPlayers}
-      // hint="2–20 players works well on one phone."
+        // hint="2–20 players works well on one phone."
+        hint={
+          state.tokenMode
+            ? `TOKEN mode ON: Special roles added`
+            : []
+        }
       />
 
       <CounterField
@@ -52,22 +85,62 @@ export default function SetupScreen({ state, actions }) {
       />
 
 
-      <div className="input">
-        
-        <div className="toggleRow">
-          <button
-            type="button"
-            className={'toggle' + (state.surpriseMode ? ' on' : '')}
-            onClick={() => actions.setSurpriseMode(!state.surpriseMode)}
-            aria-pressed={state.surpriseMode}
-          >
-            <span className="knob" />
-          </button>
-          <div className="toggleText">
-            <label>Surprise mode</label>
+      {/* Modes (side-by-side) */}
+      <div className="modesGrid">
+        <div className="input" style={{ marginBottom: 0 }}>
+          <div className="toggleRow">
+            <button
+              type="button"
+              className={'toggle' + (state.surpriseMode ? ' on' : '')}
+              onClick={() => actions.setSurpriseMode(!state.surpriseMode)}
+              aria-pressed={state.surpriseMode}
+              aria-label="Toggle surprise mode"
+            >
+              <span className="knob" />
+            </button>
+            <div className="toggleText">
+              <label className="toggleTextSurprise">Surprise mode</label>
+            </div>
+          </div>
+        </div>
+
+        <div className="input" style={{ marginBottom: 0 }}>
+          <div className="toggleRow">
+            <button
+              type="button"
+              className={'toggle' + (state.tokenMode ? ' on' : '')}
+              onClick={() => {
+                const next = !state.tokenMode
+                actions.setTokenMode(next)
+
+                if (next) {
+                  actions.openDialog({
+                    title: 'Token mode',
+                    message: TOKEN_MODE_INFO,
+                    actions: [
+                      {
+                        label: 'Got it',
+                        variant: 'primary',
+                        onClick: () => actions.closeDialog(),
+                      },
+                    ],
+                  })
+                }
+              }}
+              aria-pressed={state.tokenMode}
+              aria-label="Toggle token mode"
+            >
+              <span className="knob" />
+            </button>
+
+            <div className="toggleText">
+              <label className="toggleTextSurprise">Token mode</label>
+
+            </div>
           </div>
         </div>
       </div>
+
 
       <div className="sectionTitle">Player names</div>
       <PlayerListEditor players={state.players} names={state.names} onChangeName={actions.setName} />
@@ -90,6 +163,7 @@ export default function SetupScreen({ state, actions }) {
           onClick={() => {
             actions.setPlayers(2)
             actions.setSurpriseMode(false)
+            actions.setTokenMode(false)
             actions.setImposters(1)
             actions.setName(0, '')
             actions.setName(1, '')
@@ -119,8 +193,25 @@ export default function SetupScreen({ state, actions }) {
                 <b>Set up the round:</b> choose <b>Players</b>, enter names, and pick how many <b>Imposters</b>.
                 <br />
                 <span className="muted">
-                  If <b>Surprise mode</b> is ON, the game randomizes imposters each round (1 to many).
+                  If <b>Surprise mode</b> is ON, the game randomizes imposters each round (1–players).
                 </span>
+              </li>
+
+              <li>
+                <b>Optional: Token mode</b> adds special roles (tokens):
+                <ul style={{ margin: '8px 0 0 0', paddingLeft: 18, display: 'grid', gap: 6 }}>
+                  <li>
+                    <b>The Detective</b> 🕵️ — at the end, you may ask <b>one extra question</b> to any player. You must
+                    announce this role to the group during your card reveal.
+                  </li>
+                  <li>
+                    <b>The Fox</b> 🦊 — you <b>win if you get voted out</b>. Keep this role secret Shhh...🤐.
+                  </li>
+                  <li>
+                    <b>The Quiet Mouse</b> 🐭 — during the <b>first discussion round</b>, you may silently pass your turn
+                    once. You must announce this role to the group during your card reveal.
+                  </li>
+                </ul>
               </li>
 
               <li>
