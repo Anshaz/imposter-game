@@ -14,3 +14,7 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Licensing
 - Code: MIT (see LICENSE)
 - Assets (art/audio): All rights reserved (see ASSETS_LICENSE.md)
+
+## Icons
+<a href="https://www.flaticon.com/free-icons/germany" title="germany icons">Germany icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/flag" title="flag icons">Flag icons created by Freepik - Flaticon</a>
