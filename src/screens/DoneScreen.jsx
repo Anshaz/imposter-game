@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function badge(text) {
   return (
@@ -22,16 +23,24 @@ function badge(text) {
   )
 }
 
-function tokenChip(tokenId, tokenLabel) {
-  if (!tokenId) return null
-  const icon =
-    tokenId === 'detective' ? '🕵️' : tokenId === 'fox' ? '🦊' : tokenId === 'quietMouse' ? '🐭' : '🎭'
-  return badge(`${icon} ${tokenLabel}`)
-}
-
 export default function DoneScreen({ derived, actions }) {
+  const { t } = useTranslation()
   const results = derived.results
   if (!results) return null
+
+  const tokenChip = (tokenId) => {
+    if (!tokenId) return null
+    const icon = tokenId === 'detective' ? '🕵️' : tokenId === 'fox' ? '🦊' : tokenId === 'quietMouse' ? '🐭' : '🎭'
+    const label =
+      tokenId === 'detective'
+        ? t('reveal.tokens.detective.name')
+        : tokenId === 'fox'
+          ? t('reveal.tokens.fox.name')
+          : tokenId === 'quietMouse'
+            ? t('reveal.tokens.quietMouse.name')
+            : tokenId
+    return badge(`${icon} ${label}`)
+  }
 
   const sorted = useMemo(() => {
     // Put imposters first, then token holders, then everyone else (nice readability)
@@ -42,10 +51,10 @@ export default function DoneScreen({ derived, actions }) {
   return (
     <div className="stage">
       <div className="card">
-        <div className="cardTitle">Round results</div>
+        <div className="cardTitle">{t('done.title')}</div>
 
         <div className="muted" style={{ marginTop: -6 }}>
-          Secret word: <b>{results.word}</b>
+          {t('done.secretWord')} <b>{results.word}</b>
         </div>
 
         <div style={{ height: 14 }} />
@@ -71,8 +80,8 @@ export default function DoneScreen({ derived, actions }) {
               fontWeight: 700,
             }}
           >
-            <div>Player</div>
-            <div>Role</div>
+            <div>{t('done.tablePlayer')}</div>
+            <div>{t('done.tableRole')}</div>
           </div>
 
           <div style={{ display: 'grid' }}>
@@ -91,8 +100,8 @@ export default function DoneScreen({ derived, actions }) {
                 <div style={{ fontWeight: 800 }}>{r.name}</div>
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'flex-start' }}>
-                  {r.isImposter ? badge('😈 Imposter') : badge('🙂 Civilian')}
-                  {results.tokenMode ? tokenChip(r.tokenId, r.tokenLabel) : null}
+                  {r.isImposter ? badge(t('done.badgeImposter')) : badge(t('done.badgeCivilian'))}
+                  {results.tokenMode ? tokenChip(r.tokenId) : null}
                 </div>
               </div>
             ))}
@@ -101,17 +110,16 @@ export default function DoneScreen({ derived, actions }) {
 
         {results.tokenMode ? (
           <div className="muted" style={{ marginTop: 12 }}>
-            Token reminders: 🕵️ Detective asks 1 extra question at the end • 🐭 Quiet Mouse may silently pass once
-            in the first round • 🦊 Fox wins if voted out (keeps it secret).
+            {t('done.tokenReminders')}
           </div>
         ) : null}
 
         <div className="row" style={{ marginTop: 16 }}>
           <button className="btn primary" type="button" onClick={actions.newRound}>
-            New round
+            {t('done.newRound')}
           </button>
           <button className="btn ghost" type="button" onClick={actions.goSetup}>
-            Back to setup
+            {t('done.backSetup')}
           </button>
         </div>
       </div>

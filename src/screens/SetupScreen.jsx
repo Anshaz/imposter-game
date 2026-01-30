@@ -3,42 +3,57 @@ import CounterField from '../components/CounterField'
 import PlayerListEditor from '../components/PlayerListEditor'
 import Modal from '../components/Modal'
 import { validateSetup } from '../lib/game'
+import { useTranslation } from 'react-i18next'
 
 export default function SetupScreen({ state, actions }) {
+  const { t } = useTranslation()
   const maxPlayers = 20
   const [howOpen, setHowOpen] = useState(false)
+
   const TOKEN_MODE_INFO = (
     <div style={{ display: 'grid', gap: 10, textAlign: 'left' }}>
       <p className="muted" style={{ margin: 0 }}>
-        Token mode adds special roles on top of the Imposter/Civilian roles.
+        {t('setup.tokenInfo.intro')}
       </p>
 
       <div style={{ display: 'grid', gap: 8 }}>
         <div>
-          <b>🕵️ Detective</b> — asks <b>1 extra question</b> at the end of the round.
-          <div className="muted">Announce this role to everyone during your reveal.</div>
+          <b>{t('setup.tokenInfo.detective')}</b>
+          <div className="muted">{t('setup.tokenInfo.detectiveNote')}</div>
         </div>
 
         <div>
-          <b>🐭 Quiet Mouse</b> — may <b>silently pass once</b> in the first round.
-          <div className="muted">Announce this role to everyone during your reveal.</div>
+          <b>{t('setup.tokenInfo.mouse')}</b>
+          <div className="muted">{t('setup.tokenInfo.mouseNote')}</div>
         </div>
 
         <div>
-          <b>🦊 Fox</b> — <b>wins if voted out</b>.
-          <div className="muted">Keep this role secret.</div>
+          <b>{t('setup.tokenInfo.fox')}</b>
+          <div className="muted">{t('setup.tokenInfo.foxNote')}</div>
         </div>
       </div>
 
       <p className="muted" style={{ margin: 0 }}>
-        Tip: Fox should still try to blend in—getting voted out is their win condition.
+        {t('setup.tokenInfo.tip')}
       </p>
     </div>
   )
 
-  const setupError = useMemo(() => {
+  const rawSetupError = useMemo(() => {
     return validateSetup({ players: state.players, imposters: state.imposters, names: state.names })
   }, [state.players, state.imposters, state.names])
+
+  const setupError = useMemo(() => {
+    if (!rawSetupError) return null
+    const map = {
+      'Players must be at least 2.': t('setup.errors.playersMin'),
+      'Imposters must be at least 1.': t('setup.errors.impostersMin'),
+      'Imposters must not exceed players.': t('setup.errors.impostersMax'),
+      'Please enter all player names.': t('setup.errors.namesMissing'),
+      'Some player names are duplicates. Please make them unique.': t('setup.errors.namesDup'),
+    }
+    return map[rawSetupError] || rawSetupError
+  }, [rawSetupError, t])
 
   const canContinue = !setupError
 
@@ -47,43 +62,33 @@ export default function SetupScreen({ state, actions }) {
       {/* Title row + How to play */}
       <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
         <div className="cardTitle" style={{ marginBottom: 0 }}>
-          Game setup
+          {t('setup.title')}
         </div>
 
         <button className="link" type="button" onClick={() => setHowOpen(true)}>
-          How to play
+          {t('setup.howToPlay')}
         </button>
       </div>
 
       <CounterField
-        label="Players"
+        label={t('setup.players')}
         value={state.players}
         min={2}
         max={maxPlayers}
         onChange={actions.setPlayers}
-        // hint="2–20 players works well on one phone."
-        hint={
-          state.tokenMode
-            ? `TOKEN mode ON: Special roles added`
-            : []
-        }
+        hint={state.tokenMode ? t('setup.tokenHintOn') : []}
       />
 
       <CounterField
-        label="Imposters"
+        label={t('setup.imposters')}
         value={state.imposters}
         displayValue={state.surpriseMode ? `` : state.imposters}
         min={1}
         max={Math.max(1, state.players)}
         onChange={actions.setImposters}
         disabled={state.surpriseMode}
-        hint={
-          state.surpriseMode
-            ? `Surprise mode ON: Imposters will be random`
-            : 'Pick how many imposters are in the round.'
-        }
+        hint={state.surpriseMode ? t('setup.surpriseHintOn') : t('setup.impostersHint')}
       />
-
 
       {/* Modes (side-by-side) */}
       <div
@@ -103,12 +108,12 @@ export default function SetupScreen({ state, actions }) {
               className={'toggle' + (state.surpriseMode ? ' on' : '')}
               onClick={() => actions.setSurpriseMode(!state.surpriseMode)}
               aria-pressed={state.surpriseMode}
-              aria-label="Toggle surprise mode"
+              aria-label={t('setup.toggleSurpriseAria')}
             >
               <span className="knob" />
             </button>
             <div className="toggleText">
-              <label className="toggleTextSurprise">Surprise mode</label>
+              <label className="toggleTextSurprise">{t('setup.surpriseMode')}</label>
             </div>
           </div>
         </div>
@@ -124,11 +129,11 @@ export default function SetupScreen({ state, actions }) {
 
                 if (next) {
                   actions.openDialog({
-                    title: 'Token mode',
+                    title: t('setup.tokenDialogTitle'),
                     message: TOKEN_MODE_INFO,
                     actions: [
                       {
-                        label: 'Got it',
+                        label: t('setup.tokenDialogGotIt'),
                         variant: 'primary',
                         onClick: () => actions.closeDialog(),
                       },
@@ -137,20 +142,19 @@ export default function SetupScreen({ state, actions }) {
                 }
               }}
               aria-pressed={state.tokenMode}
-              aria-label="Toggle token mode"
+              aria-label={t('setup.toggleTokenAria')}
             >
               <span className="knob" />
             </button>
 
             <div className="toggleText">
-              <label className="toggleTextSurprise">Token mode</label>
+              <label className="toggleTextSurprise">{t('setup.tokenMode')}</label>
             </div>
           </div>
         </div>
       </div>
 
-
-      <div className="sectionTitle">Player names</div>
+      <div className="sectionTitle">{t('setup.playerNames')}</div>
       <PlayerListEditor players={state.players} names={state.names} onChangeName={actions.setName} />
 
       {setupError ? <div className="errorBox">{setupError}</div> : null}
@@ -161,9 +165,9 @@ export default function SetupScreen({ state, actions }) {
           type="button"
           onClick={actions.goWord}
           disabled={!canContinue}
-          title={!canContinue ? 'Fill all names and check numbers' : 'Continue'}
+          title={!canContinue ? t('setup.continueTitleDisabled') : t('setup.continueTitleEnabled')}
         >
-          Continue
+          {t('setup.continue')}
         </button>
         <button
           className="btn ghost"
@@ -177,77 +181,62 @@ export default function SetupScreen({ state, actions }) {
             actions.setName(1, '')
           }}
         >
-          Defaults
+          {t('setup.defaults')}
         </button>
       </div>
 
       <div className="muted" style={{ marginTop: 12 }}>
-        Next: choose a random word or set your own (e.g., “Pizza”, “Beach”, “Shark”).
+        {t('setup.nextTip')}
       </div>
 
       {/* How to play modal */}
       <Modal
         open={howOpen}
-        title="How to play"
+        title={t('setup.howModal.title')}
         onClose={() => setHowOpen(false)}
         message={
           <div style={{ display: 'grid', gap: 10, textAlign: 'left' }}>
             <div className="muted" style={{ marginTop: -4 }}>
-              A quick party game: most players share the same secret word. Imposters don’t.
+              {t('setup.howModal.intro')}
             </div>
 
             <ol style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 10 }}>
               <li>
-                <b>Set up the round:</b> choose <b>Players</b>, enter names, and pick how many <b>Imposters</b>.
+                <b>{t('setup.howModal.s1Title')}</b> {t('setup.howModal.s1Body')}
                 <br />
-                <span className="muted">
-                  If <b>Surprise mode</b> is ON, the game randomizes imposters each round (1–players).
-                </span>
+                <span className="muted">{t('setup.howModal.s1Note')}</span>
               </li>
 
               <li>
-                <b>Optional: Token mode</b> adds special roles (tokens):
+                <b>{t('setup.howModal.s2Title')}</b> {t('setup.howModal.s2Body')}
                 <ul style={{ margin: '8px 0 0 0', paddingLeft: 18, display: 'grid', gap: 6 }}>
-                  <li>
-                    <b>The Detective</b> 🕵️ — at the end, you may ask <b>one extra question</b> to any player. You must
-                    announce this role to the group during your card reveal.
-                  </li>
-                  <li>
-                    <b>The Fox</b> 🦊 — you <b>win if you get voted out</b>. Keep this role secret Shhh...🤐.
-                  </li>
-                  <li>
-                    <b>The Quiet Mouse</b> 🐭 — during the <b>first discussion round</b>, you may silently pass your turn
-                    once. You must announce this role to the group during your card reveal.
-                  </li>
+                  <li>{t('setup.howModal.detective')}</li>
+                  <li>{t('setup.howModal.fox')}</li>
+                  <li>{t('setup.howModal.mouse')}</li>
                 </ul>
               </li>
 
               <li>
-                <b>Choose the word:</b> on the next screen pick a <b>word pack</b> (or “All packs”), then choose a
-                random word (or enter your own).
+                <b>{t('setup.howModal.s3Title')}</b> {t('setup.howModal.s3Body')}
               </li>
 
               <li>
-                <b>Pass the phone:</b> the app will tell you who to hand the phone to. Each player taps <b>Reveal</b>,
-                looks quickly, then taps <b>Hide</b> and passes it on.
+                <b>{t('setup.howModal.s4Title')}</b> {t('setup.howModal.s4Body')}
                 <br />
-                <span className="muted">
-                  Civilians see the word. Imposters see “IMPOSTER”.
-                </span>
+                <span className="muted">{t('setup.howModal.s4Note')}</span>
               </li>
 
               <li>
-                <b>Discuss:</b> serially talk as a group to find the imposter(s). Describe the word without saying it directly.
-                Ask each other questions to spot who’s bluffing.
+                <b>{t('setup.howModal.s5Title')}</b> {t('setup.howModal.s5Body')}
               </li>
 
               <li>
-                <b>Vote:</b> when ready, agree on who the imposter is and reveal the results.
+                <b>{t('setup.howModal.s6Title')}</b> {t('setup.howModal.s6Body')}
               </li>
             </ol>
 
             <div className="muted">
-              <b>Fun house rules:</b> everyone must speak once • no spelling/letter questions • no exact synonyms.
+              <b>{t('setup.howModal.houseRules')}</b> {t('setup.howModal.houseRulesBody')}
             </div>
           </div>
         }

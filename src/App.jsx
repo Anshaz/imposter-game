@@ -8,18 +8,20 @@ import PassScreen from './screens/PassScreen'
 import RevealScreen from './screens/RevealScreen'
 import DoneScreen from './screens/DoneScreen'
 import DiscussScreen from './screens/DiscussScreen'
+import { useTranslation } from 'react-i18next'
 
 export default function App() {
+  const { t } = useTranslation()
   const { state, derived, actions } = useImposterGame()
 
   const onReset = () => {
     actions.openDialog({
-      title: 'Reset game?',
-      message: 'This will clear the current round and go back to setup.',
+      title: t('dialog.resetTitle'),
+      message: t('dialog.resetMsg'),
       actions: [
-        { label: 'Cancel', variant: 'ghost', onClick: actions.closeDialog },
+        { label: t('dialog.cancel'), variant: 'ghost', onClick: actions.closeDialog },
         {
-          label: 'Reset',
+          label: t('dialog.confirmReset'),
           variant: 'primary',
           onClick: () => {
             actions.closeDialog()
@@ -43,10 +45,12 @@ export default function App() {
         open={!!state.ui.dialog}
         title={state.ui.dialog?.title || ''}
         message={state.ui.dialog?.message || ''}
-        actions={state.ui.dialog?.actions || []}
+        actions={(state.ui.dialog?.actions || []).map((a) => ({
+          ...a,
+          onClick: a.onClickId ? () => actions.runDialogAction(a.onClickId) : a.onClick,
+        }))}
         onClose={actions.closeDialog}
       />
     </AppShell>
-
   )
 }

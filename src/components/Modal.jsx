@@ -1,23 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
+// Keep original classNames from index.css: dialog-content/header/title/close/message/footer
 export default function Modal({ open, title, message, actions = [], onClose }) {
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose?.()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+  const { t } = useTranslation();
 
-  if (!open) return null
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
 
   return (
-    <div className="dialog-overlay" role="dialog" aria-modal="true" onMouseDown={onClose}>
+    <div
+      className="dialog-overlay"
+      role="dialog"
+      aria-modal="true"
+      onMouseDown={onClose}
+    >
       <div className="dialog-content" onMouseDown={(e) => e.stopPropagation()}>
         <div className="dialog-header">
           <div className="dialog-title">{title}</div>
-          <button type="button" className="dialog-close" onClick={onClose} aria-label="Close dialog">
+
+          <button
+            type="button"
+            className="dialog-close"
+            onClick={onClose}
+            aria-label={t("dialog.close")}
+            title={t("dialog.close")}
+          >
             ✕
           </button>
         </div>
@@ -30,7 +46,7 @@ export default function Modal({ open, title, message, actions = [], onClose }) {
               <button
                 key={i}
                 type="button"
-                className={a.variant === 'primary' ? 'btn primary' : 'btn ghost'}
+                className={a.variant === "primary" ? "btn primary" : "btn ghost"}
                 onClick={a.onClick}
               >
                 {a.label}
@@ -38,11 +54,11 @@ export default function Modal({ open, title, message, actions = [], onClose }) {
             ))
           ) : (
             <button type="button" className="btn primary" onClick={onClose}>
-              Close
+              {t("dialog.close")}
             </button>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }

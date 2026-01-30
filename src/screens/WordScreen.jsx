@@ -1,83 +1,100 @@
 import React, { useMemo } from 'react'
 import TextField from '../components/TextField'
 import SelectField from '../components/SelectField'
-import { PACK_OPTIONS, getPackById, WORD_PACKS, getAllPackWords } from '../wordPacks'
+import { useTranslation } from 'react-i18next'
+import { WORD_PACKS, getPackById, getAllPackWords, getPackDescription, getPackLabel, getPackOptions } from '../wordPacks'
 
-function packMeta(packId) {
+function packMeta(packId, lang, t) {
   if (packId === 'all') {
-    const total = getAllPackWords().length
-    return { name: 'All packs', description: 'Maximum variety across every pack.', count: total }
+    const total = getAllPackWords(lang).length
+    return { name: t('packs.allName'), description: t('packs.allDesc'), count: total }
   }
   const p = getPackById(packId)
-  return { name: p.name, description: p.description, count: p.words.length }
+  const words = p.words?.[lang] || p.words?.en || []
+  return { name: getPackLabel(p, lang), description: getPackDescription(p, lang), count: words.length }
 }
 
 export default function WordScreen({ state, actions }) {
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language?.startsWith('de') ? 'de' : 'en'
+
   const custom = state.customWord
   const canUseCustom = useMemo(() => custom.trim().length > 0, [custom])
 
-  const meta = useMemo(() => packMeta(state.packId), [state.packId])
+  const meta = useMemo(() => packMeta(state.packId, lang, t), [state.packId, lang, t])
+  const options = useMemo(() => getPackOptions(lang, t), [lang, t])
 
   return (
     <div className="card">
-      <div className="cardTitle">Choose the word</div>
+      <div className="cardTitle">{t('word.title')}</div>
 
       <div className="choiceGrid">
         <div className="choiceCard choiceCard--random" style={{ cursor: 'default' }}>
-          <div className="choiceTitle">Play With Random word</div>
+          <div className="choiceTitle">{t('word.randomTitle')}</div>
           <div className="muted" style={{ marginBottom: 12 }}>
-            Pick a pack for the vibe — then start.
+            {t('word.randomDesc')}
           </div>
 
           <SelectField
-            label="Word pack"
+            label={t('word.wordPack')}
             value={state.packId}
             onChange={actions.setPack}
-            options={PACK_OPTIONS}
-            hint={`${meta.description}  •  ${meta.count} words`}
+            options={options}
+            hint={t('word.meta', { desc: meta.description, count: meta.count })}
             right={
               <span className="pill">
-                {state.packId === 'all' ? `${WORD_PACKS.length + 1} packs` : '1 pack'}
+                {state.packId === 'all'
+                  ? t('word.packsPillMany', { count: WORD_PACKS.length + 1 })
+                  : t('word.packsPillOne')}
               </span>
             }
           />
 
-          <button type="button" className="btn primary btn--random" onClick={actions.startRandom}>
-            Start with random word
+          <button
+            type="button"
+            className="btn primary btn--random"
+            onClick={actions.startRandom}
+          >
+            {t('word.startRandom')}
           </button>
 
           <div className="muted" style={{ marginTop: 10 }}>
-            Tip: packs keep rounds fresh. “All packs” is great for mixed groups.
+            {t('word.randomTip')}
           </div>
         </div>
 
         <div className="choiceCard choiceCard--custom" style={{ cursor: 'default' }}>
-          <div className="choiceTitle">Play With Custom word</div>
+          <div className="choiceTitle">{t('word.customTitle')}</div>
           <div className="muted" style={{ marginBottom: 12 }}>
-            Great for inside jokes. Keep it short.
+            {t('word.customDesc')}
           </div>
 
           <TextField
-            label="Your word"
+            label={t('word.yourWord')}
             value={custom}
             onChange={actions.setCustomWord}
-            placeholder="e.g., Pineapple, Tokyo, Guitar"
+            placeholder={t('word.placeholder')}
           />
 
-          <button type="button" className="btn primary btn--custom" onClick={() => actions.startCustom(custom)} disabled={!canUseCustom}>
-            Start with custom word
+          <button
+            type="button"
+            className="btn primary btn--custom"
+            onClick={() => actions.startCustom(custom)}
+            disabled={!canUseCustom}
+          >
+            {t('word.startCustom')}
           </button>
         </div>
       </div>
 
       <div className="row" style={{ marginTop: 16 }}>
         <button type="button" className="btn ghost" onClick={actions.goSetup}>
-          Back
+          {t('word.back')}
         </button>
       </div>
 
       <div className="muted" style={{ marginTop: 12 }}>
-        Heads up: imposters will only see “Imposter”. Everyone else sees the same word.
+        {t('word.headsUp')}
       </div>
     </div>
   )

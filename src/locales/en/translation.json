@@ -1,0 +1,167 @@
+{
+  "app": {
+    "title": "Imposter — Pass & Play",
+    "subtitle": "Secret roles, one phone. No peeking 👀",
+    "reset": "Reset"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "steps": {
+    "setup": "Setup",
+    "word": "Word",
+    "pass": "Pass",
+    "reveal": "Reveal",
+    "discuss": "Discuss",
+    "done": "Done"
+  },
+  "dialog": {
+    "resetTitle": "Reset game?",
+    "resetMsg": "This will clear the current round and go back to setup.",
+    "cancel": "Cancel",
+    "confirmReset": "Reset",
+    "close": "Close dialog"
+  },
+  "setup": {
+    "title": "Game setup",
+    "howToPlay": "How to play",
+    "players": "Players",
+    "imposters": "Imposters",
+    "tokenHintOn": "TOKEN mode ON: Special roles added",
+    "surpriseHintOn": "Surprise mode ON: Imposters will be random",
+    "impostersHint": "Pick how many imposters are in the round.",
+    "surpriseMode": "Surprise mode",
+    "tokenMode": "Token mode",
+    "toggleSurpriseAria": "Toggle surprise mode",
+    "toggleTokenAria": "Toggle token mode",
+    "playerNames": "Player names",
+    "continue": "Continue",
+    "defaults": "Defaults",
+    "continueTitleDisabled": "Fill all names and check numbers",
+    "continueTitleEnabled": "Continue",
+    "nextTip": "Next: choose a random word or set your own (e.g., “Pizza”, “Beach”, “Shark”).",
+    "tokenDialogTitle": "Token mode",
+    "tokenDialogGotIt": "Got it",
+    "tokenInfo": {
+      "intro": "Token mode adds special roles on top of the Imposter/Civilian roles.",
+      "detective": "🕵️ Detective — asks 1 extra question at the end of the round.",
+      "detectiveNote": "Announce this role to everyone during your reveal.",
+      "mouse": "🐭 Quiet Mouse — may silently pass once in the first round.",
+      "mouseNote": "Announce this role to everyone during your reveal.",
+      "fox": "🦊 Fox — wins if voted out.",
+      "foxNote": "Keep this role secret.",
+      "tip": "Tip: Fox should still try to blend in—getting voted out is their win condition."
+    },
+    "howModal": {
+      "title": "How to play",
+      "intro": "A quick party game: most players share the same secret word. Imposters don’t.",
+      "s1Title": "Set up the round:",
+      "s1Body": "choose Players, enter names, and pick how many Imposters.",
+      "s1Note": "If Surprise mode is ON, the game randomizes imposters each round (1–players).",
+      "s2Title": "Optional: Token mode",
+      "s2Body": "adds special roles (tokens):",
+      "detective": "The Detective 🕵️ — at the end, you may ask one extra question to any player. You must announce this role to the group during your card reveal.",
+      "fox": "The Fox 🦊 — you win if you get voted out. Keep this role secret Shhh...🤐.",
+      "mouse": "The Quiet Mouse 🐭 — during the first discussion round, you may silently pass your turn once. You must announce this role to the group during your card reveal.",
+      "s3Title": "Choose the word:",
+      "s3Body": "on the next screen pick a word pack (or “All packs”), then choose a random word (or enter your own).",
+      "s4Title": "Pass the phone:",
+      "s4Body": "the app will tell you who to hand the phone to. Each player taps Reveal, looks quickly, then taps Hide and passes it on.",
+      "s4Note": "Civilians see the word. Imposters see “IMPOSTER”.",
+      "s5Title": "Discuss:",
+      "s5Body": "serially talk as a group to find the imposter(s). Describe the word without saying it directly. Ask each other questions to spot who’s bluffing.",
+      "s6Title": "Vote:",
+      "s6Body": "when ready, agree on who the imposter is and reveal the results.",
+      "houseRules": "Fun house rules:",
+      "houseRulesBody": "everyone must speak once • no spelling/letter questions • no exact synonyms."
+    },
+    "errors": {
+      "playersMin": "Players must be at least 2.",
+      "impostersMin": "Imposters must be at least 1.",
+      "impostersMax": "Imposters must not exceed players.",
+      "namesMissing": "Please enter all player names.",
+      "namesDup": "Some player names are duplicates. Please make them unique."
+    }
+  },
+  "word": {
+    "title": "Choose the word",
+    "randomTitle": "Play With Random word",
+    "randomDesc": "Pick a pack for the vibe — then start.",
+    "wordPack": "Word pack",
+    "meta": "{{desc}}  •  {{count}} words",
+    "packsPillOne": "1 pack",
+    "packsPillMany": "{{count}} packs",
+    "startRandom": "Start with random word",
+    "randomTip": "Tip: packs keep rounds fresh. “All packs” is great for mixed groups.",
+    "customTitle": "Play With Custom word",
+    "customDesc": "Great for inside jokes. Keep it short.",
+    "yourWord": "Your word",
+    "placeholder": "e.g., Pineapple, Tokyo, Guitar",
+    "startCustom": "Start with custom word",
+    "back": "Back",
+    "headsUp": "Heads up: imposters will only see “Imposter”. Everyone else sees the same word."
+  },
+  "packs": {
+    "allName": "All packs",
+    "allDesc": "Maximum variety across every pack.",
+    "allSublabel": "Max variety"
+  },
+  "pass": {
+    "pill": "Player {{current}} of {{total}}",
+    "handTo": "Hand the phone to",
+    "ready": "When you’re ready, tap Reveal. Make sure nobody else can see!",
+    "reveal": "Reveal"
+  },
+  "reveal": {
+    "thisIsFor": "This is for",
+    "roleImposter": "Imposter",
+    "tipImposter": "Blend in. Ask questions. Don’t get caught.",
+    "tipCivilian": "Describe it... without saying it.",
+    "noToken": "No token for you this round.",
+    "hidePass": "Hide & pass",
+    "hidePassHint": "Tap “Hide & pass” before handing the phone to the next player.",
+    "tokens": {
+      "detective": {
+        "name": "The Detective",
+        "desc": "At the end of the round, you may question one player (1 extra question).",
+        "inst": "Announce this role to the group now."
+      },
+      "fox": {
+        "name": "The Fox",
+        "desc": "You win if you get voted out.",
+        "inst": "Keep this role secret."
+      },
+      "quietMouse": {
+        "name": "The Quiet Mouse",
+        "desc": "Once during the first discussion round, you may silently pass your turn.",
+        "inst": "Announce this role to the group now."
+      }
+    }
+  },
+  "discuss": {
+    "title": "All set!",
+    "putDown": "Put the phone down.",
+    "desc": "Revealing is complete. Now discuss together and find the imposter(s).",
+    "reminderTitle": "Quick reminder",
+    "reminderText": "Don’t say the secret word out loud. Ask questions and listen for bluffing.",
+    "viewResults": "View results",
+    "backSetup": "Back to setup",
+    "players": "Players: {{total}}"
+  },
+  "done": {
+    "title": "Round results",
+    "secretWord": "Secret word:",
+    "tablePlayer": "Player",
+    "tableRole": "Role",
+    "badgeImposter": "😈 Imposter",
+    "badgeCivilian": "🙂 Civilian",
+    "tokenReminders": "Token reminders: 🕵️ Detective asks 1 extra question at the end • 🐭 Quiet Mouse may silently pass once in the first round • 🦊 Fox wins if voted out (keeps it secret).",
+    "newRound": "New round",
+    "backSetup": "Back to setup"
+  },
+  "player": {
+    "label": "Player {{n}}"
+  }
+}

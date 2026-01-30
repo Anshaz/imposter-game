@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function initials(name) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -9,6 +10,8 @@ function initials(name) {
 }
 
 export default function PlayerListEditor({ players, names, onChangeName }) {
+  const { t } = useTranslation()
+
   return (
     <div className="playerList">
       {Array.from({ length: players }, (_, i) => {
@@ -20,13 +23,9 @@ export default function PlayerListEditor({ players, names, onChangeName }) {
             </div>
             <div className="playerInput">
               <div className="playerMeta">
-                <div className="playerLabel">Player {i + 1}</div>
+                <div className="playerLabel">{t('player.label', { n: i + 1 })}</div>
               </div>
-              <input
-                type="text"
-                value={n}
-                onChange={(e) => onChangeName(i, e.target.value)}
-              />
+              <input type="text" value={n} onChange={(e) => onChangeName(i, e.target.value)} />
             </div>
           </div>
         )

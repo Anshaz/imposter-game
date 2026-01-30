@@ -1,33 +1,14 @@
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const TOKENS = [
-  {
-    id: 'detective',
-    name: 'The Detective',
-    icon: '🕵️',
-    revealToGroup: true,
-    description: 'At the end of the round, you may question one player (1 extra question).',
-    instruction: 'Announce this role to the group now.',
-  },
-  {
-    id: 'fox',
-    name: 'The Fox',
-    icon: '🦊',
-    revealToGroup: false,
-    description: 'You win if you get voted out.',
-    instruction: 'Keep this role secret.',
-  },
-  {
-    id: 'quietMouse',
-    name: 'The Quiet Mouse',
-    icon: '🐭',
-    revealToGroup: true,
-    description: 'Once during the first discussion round, you may silently pass your turn.',
-    instruction: 'Announce this role to the group now.',
-  },
+  { id: 'detective', icon: '🕵️', revealToGroup: true },
+  { id: 'fox', icon: '🦊', revealToGroup: false },
+  { id: 'quietMouse', icon: '🐭', revealToGroup: true },
 ]
 
 export default function RevealScreen({ derived, actions }) {
+  const { t } = useTranslation()
   const p = derived.current
   if (!p) return null
 
@@ -36,24 +17,31 @@ export default function RevealScreen({ derived, actions }) {
 
   const token = useMemo(() => {
     if (!tokenMode) return null
-    return TOKENS.find((t) => t.id === p.tokenRole) || null
+    return TOKENS.find((tt) => tt.id === p.tokenRole) || null
   }, [tokenMode, p.tokenRole])
+
+  const tokenText = (id) => ({
+    name: t(`reveal.tokens.${id}.name`),
+    description: t(`reveal.tokens.${id}.desc`),
+    instruction: t(`reveal.tokens.${id}.inst`),
+  })
 
   return (
     <div className="stage">
       <div className={`card fullscreen reveal-animation ${isImposter ? 'dangerGlow' : 'successGlow'}`}>
-        <div className="muted">This is for</div>
+        <div className="muted">{t('reveal.thisIsFor')}</div>
         <div className="bigName">{p.name}</div>
 
         <div style={{ height: 14 }} />
 
         {tokenMode ? (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
-            {TOKENS.map((t) => {
-              const active = p.tokenRole === t.id
+            {TOKENS.map((tt) => {
+              const active = p.tokenRole === tt.id
+              const txt = tokenText(tt.id)
               return (
                 <span
-                  key={t.id}
+                  key={tt.id}
                   className="pill"
                   style={{
                     opacity: active ? 1 : 0.35,
@@ -61,7 +49,7 @@ export default function RevealScreen({ derived, actions }) {
                     borderStyle: active ? 'solid' : 'dashed',
                   }}
                 >
-                  {t.icon} {t.name}
+                  {tt.icon} {txt.name}
                 </span>
               )
             })}
@@ -69,12 +57,10 @@ export default function RevealScreen({ derived, actions }) {
         ) : null}
 
         <div className={`big ${isImposter ? 'role-imposter' : 'role-word'}`}>
-          {isImposter ? 'Imposter' : p.role}
+          {isImposter ? t('reveal.roleImposter') : p.role}
         </div>
 
-        <div className="muted">
-          {isImposter ? 'Blend in. Ask questions. Don’t get caught.' : 'Describe it... without saying it.'}
-        </div>
+        <div className="muted">{isImposter ? t('reveal.tipImposter') : t('reveal.tipCivilian')}</div>
 
         {tokenMode ? (
           token ? (
@@ -88,19 +74,26 @@ export default function RevealScreen({ derived, actions }) {
                 textAlign: 'left',
               }}
             >
-              <div style={{ fontWeight: 800 }}>
-                {token.icon} {token.name}
-              </div>
-              <div className="muted" style={{ marginTop: 6 }}>
-                {token.description}
-              </div>
-              <div className="muted" style={{ marginTop: 6, fontWeight: 600, color: '#7fff00' }}>
-                {token.instruction}
-              </div>
+              {(() => {
+                const txt = tokenText(token.id)
+                return (
+                  <>
+                    <div style={{ fontWeight: 800 }}>
+                      {token.icon} {txt.name}
+                    </div>
+                    <div className="muted" style={{ marginTop: 6 }}>
+                      {txt.description}
+                    </div>
+                    <div className="muted" style={{ marginTop: 6, fontWeight: 600, color: '#7fff00' }}>
+                      {txt.instruction}
+                    </div>
+                  </>
+                )
+              })()}
             </div>
           ) : (
             <div className="muted" style={{ marginTop: 12 }}>
-              No token for you this round.
+              {t('reveal.noToken')}
             </div>
           )
         ) : null}
@@ -108,12 +101,12 @@ export default function RevealScreen({ derived, actions }) {
         <div style={{ height: 20 }} />
         <div className="center">
           <button type="button" className="btn primary" onClick={actions.next}>
-            Hide & pass
+            {t('reveal.hidePass')}
           </button>
         </div>
 
         <div className="muted" style={{ marginTop: 14 }}>
-          Tap “Hide & pass” before handing the phone to the next player.
+          {t('reveal.hidePassHint')}
         </div>
       </div>
     </div>

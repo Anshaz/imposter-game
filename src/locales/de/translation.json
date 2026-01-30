@@ -1,0 +1,167 @@
+{
+  "app": {
+    "title": "Imposter — Pass & Play",
+    "subtitle": "Geheime Rollen, ein Handy. Nicht luschern! 👀",
+    "reset": "Zurücksetzen"
+  },
+  "language": {
+    "label": "Sprache",
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "steps": {
+    "setup": "Setup",
+    "word": "Wort",
+    "pass": "Weitergeben",
+    "reveal": "Aufdecken",
+    "discuss": "Diskutieren",
+    "done": "Ergebnis"
+  },
+  "dialog": {
+    "resetTitle": "Spiel zurücksetzen?",
+    "resetMsg": "Dadurch wird die aktuelle Runde gelöscht und du gehst zurück zum Setup.",
+    "cancel": "Abbrechen",
+    "confirmReset": "Zurücksetzen",
+    "close": "Dialog schließen"
+  },
+  "setup": {
+    "title": "Spiel einstellen",
+    "howToPlay": "Spielregeln",
+    "players": "Spieler",
+    "imposters": "Imposter",
+    "tokenHintOn": "TOKEN-Modus AN: Spezialrollen aktiv",
+    "surpriseHintOn": "Überraschungsmodus AN: Imposter werden zufällig gewählt",
+    "impostersHint": "Wähle, wie viele Imposter in der Runde sind.",
+    "surpriseMode": "Überraschungsmodus",
+    "tokenMode": "Token-Modus",
+    "toggleSurpriseAria": "Überraschungsmodus umschalten",
+    "toggleTokenAria": "Token-Modus umschalten",
+    "playerNames": "Spielernamen",
+    "continue": "Weiter",
+    "defaults": "Standard",
+    "continueTitleDisabled": "Bitte alle Namen ausfüllen und Zahlen prüfen",
+    "continueTitleEnabled": "Weiter",
+    "nextTip": "Als Nächstes: Wähle ein Zufallswort oder gib dein eigenes ein (z. B. „Pizza“, „Strand“, „Hai“).",
+    "tokenDialogTitle": "Token-Modus",
+    "tokenDialogGotIt": "Alles klar",
+    "tokenInfo": {
+      "intro": "Im Token-Modus gibt es zusätzliche Spezialrollen neben Imposter/Zivilist.",
+      "detective": "🕵️ Detektiv — stellt am Ende 1 zusätzliche Frage.",
+      "detectiveNote": "Diese Rolle beim Aufdecken der Gruppe ansagen.",
+      "mouse": "🐭 Leise Maus — darf in der ersten Runde einmal stumm passen.",
+      "mouseNote": "Diese Rolle beim Aufdecken der Gruppe ansagen.",
+      "fox": "🦊 Fuchs — gewinnt, wenn er rausgewählt wird.",
+      "foxNote": "Diese Rolle geheim halten.",
+      "tip": "Tipp: Der Fuchs sollte trotzdem unauffällig bleiben — rausgewählt werden ist seine Gewinnbedingung."
+    },
+    "howModal": {
+      "title": "Spielregeln",
+      "intro": "Ein schnelles Partyspiel: Die meisten Spieler haben dasselbe geheime Wort. Imposter nicht.",
+      "s1Title": "Runde einstellen:",
+      "s1Body": "Spieler wählen, Namen eintragen und festlegen, wie viele Imposter dabei sind.",
+      "s1Note": "Wenn der Überraschungsmodus AN ist, werden Imposter in jeder Runde zufällig bestimmt (1–Spieler).",
+      "s2Title": "Optional: Token-Modus",
+      "s2Body": "fügt Spezialrollen (Tokens) hinzu:",
+      "detective": "Der Detektiv 🕵️ — am Ende darfst du einem Spieler eine zusätzliche Frage stellen. Diese Rolle musst du beim Aufdecken der Gruppe ansagen.",
+      "fox": "Der Fuchs 🦊 — du gewinnst, wenn du rausgewählt wirst. Rolle geheim halten – pssst…🤐.",
+      "mouse": "Die Leise Maus 🐭 — in der ersten Diskussionsrunde darfst du einmal stumm passen. Diese Rolle musst du beim Aufdecken der Gruppe ansagen.",
+      "s3Title": "Wort wählen:",
+      "s3Body": "Auf dem nächsten Bildschirm ein Wortpaket (oder „Alle Pakete“) wählen, dann ein Zufallswort nehmen (oder dein eigenes eingeben).",
+      "s4Title": "Handy weitergeben:",
+      "s4Body": "Die App sagt, wem du das Handy gibst. Jeder tippt auf „Aufdecken“, schaut kurz, tippt „Verbergen & weitergeben“ und gibt es weiter.",
+      "s4Note": "Zivilisten sehen das Wort. Imposter sehen „IMPOSTER“.",
+      "s5Title": "Diskutieren:",
+      "s5Body": "Redet der Reihe nach als Gruppe und findet die Imposter. Beschreibt das Wort, ohne es direkt zu sagen. Stellt Fragen und achtet auf Bluffen.",
+      "s6Title": "Abstimmen:",
+      "s6Body": "Wenn ihr bereit seid, einigt euch, wer Imposter ist, und schaut euch das Ergebnis an.",
+      "houseRules": "Spaß-Regeln:",
+      "houseRulesBody": "jeder muss einmal sprechen • keine Buchstaben-/Rechtschreibfragen • keine exakten Synonyme."
+    },
+    "errors": {
+      "playersMin": "Es müssen mindestens 2 Spieler sein.",
+      "impostersMin": "Es muss mindestens 1 Imposter geben.",
+      "impostersMax": "Imposter dürfen nicht mehr als Spieler sein.",
+      "namesMissing": "Bitte alle Spielernamen eingeben.",
+      "namesDup": "Einige Namen sind doppelt. Bitte macht sie eindeutig."
+    }
+  },
+  "word": {
+    "title": "Wort wählen",
+    "randomTitle": "Mit Zufallswort spielen",
+    "randomDesc": "Wähle ein Paket für die Stimmung — dann starten.",
+    "wordPack": "Wortpaket",
+    "meta": "{{desc}}  •  {{count}} Wörter",
+    "packsPillOne": "1 Paket",
+    "packsPillMany": "{{count}} Pakete",
+    "startRandom": "Mit Zufallswort starten",
+    "randomTip": "Tipp: Pakete halten die Runden frisch. „Alle Pakete“ ist super für gemischte Gruppen.",
+    "customTitle": "Mit eigenem Wort spielen",
+    "customDesc": "Perfekt für Insider. Kurz halten.",
+    "yourWord": "Dein Wort",
+    "placeholder": "z. B. Ananas, Tokio, Gitarre",
+    "startCustom": "Mit eigenem Wort starten",
+    "back": "Zurück",
+    "headsUp": "Hinweis: Imposter sehen nur „Imposter“. Alle anderen sehen dasselbe Wort."
+  },
+  "packs": {
+    "allName": "Alle Pakete",
+    "allDesc": "Maximale Vielfalt über alle Pakete hinweg.",
+    "allSublabel": "Max. Vielfalt"
+  },
+  "pass": {
+    "pill": "Spieler {{current}} von {{total}}",
+    "handTo": "Gib das Handy an",
+    "ready": "Wenn du bereit bist, tippe auf „Aufdecken“. Achte darauf, dass niemand sonst sehen kann!",
+    "reveal": "Aufdecken"
+  },
+  "reveal": {
+    "thisIsFor": "Das ist für",
+    "roleImposter": "Imposter",
+    "tipImposter": "Unauffällig bleiben. Fragen stellen. Nicht erwischt werden.",
+    "tipCivilian": "Beschreibe es… ohne es zu sagen.",
+    "noToken": "Diese Runde kein Token für dich.",
+    "hidePass": "Verbergen & weitergeben",
+    "hidePassHint": "Tippe auf „Verbergen & weitergeben“, bevor du das Handy an den nächsten Spieler gibst.",
+    "tokens": {
+      "detective": {
+        "name": "Der Detektiv",
+        "desc": "Am Ende der Runde darfst du einen Spieler befragen (1 zusätzliche Frage).",
+        "inst": "Sage diese Rolle jetzt der Gruppe an."
+      },
+      "fox": {
+        "name": "Der Fuchs",
+        "desc": "Du gewinnst, wenn du rausgewählt wirst.",
+        "inst": "Halte diese Rolle geheim."
+      },
+      "quietMouse": {
+        "name": "Die Leise Maus",
+        "desc": "In der ersten Diskussionsrunde darfst du einmal stumm passen.",
+        "inst": "Sage diese Rolle jetzt der Gruppe an."
+      }
+    }
+  },
+  "discuss": {
+    "title": "Alles bereit!",
+    "putDown": "Leg das Handy hin.",
+    "desc": "Alle haben aufgedeckt. Jetzt gemeinsam diskutieren und die Imposter finden.",
+    "reminderTitle": "Kurze Erinnerung",
+    "reminderText": "Sag das geheime Wort nicht laut. Stell Fragen und achte auf Bluffen.",
+    "viewResults": "Ergebnis ansehen",
+    "backSetup": "Zurück zum Setup",
+    "players": "Spieler: {{total}}"
+  },
+  "done": {
+    "title": "Rundenergebnis",
+    "secretWord": "Geheimes Wort:",
+    "tablePlayer": "Spieler",
+    "tableRole": "Rolle",
+    "badgeImposter": "😈 Imposter",
+    "badgeCivilian": "🙂 Zivilist",
+    "tokenReminders": "Token-Erinnerung: 🕵️ Detektiv stellt am Ende 1 extra Frage • 🐭 Leise Maus darf in der ersten Runde einmal stumm passen • 🦊 Fuchs gewinnt, wenn er rausgewählt wird (bleibt geheim).",
+    "newRound": "Neue Runde",
+    "backSetup": "Zurück zum Setup"
+  },
+  "player": {
+    "label": "Spieler {{n}}"
+  }
+}

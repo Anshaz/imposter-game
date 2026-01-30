@@ -1055,3 +1055,77 @@ select:focus {
   font-size: 13px;
   line-height: 1;
 }
+/* --- Language styles --- */
+.langWrap {
+  position: relative;
+}
+
+.langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+}
+
+.langFlag {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.langCaret {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.langMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 20, 24, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  z-index: 60;
+  min-width: 56px;
+}
+
+.langOption {
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.langOption:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.langOption.active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.langFlagImg {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+}
+
+.langOptionImg {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+}

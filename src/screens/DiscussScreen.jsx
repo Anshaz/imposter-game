@@ -1,17 +1,20 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function DiscussScreen({ derived, actions }) {
+  const { t } = useTranslation()
+
   return (
     <div className="stage">
       <div className="card">
-        <div className="cardTitle">All set!</div>
+        <div className="cardTitle">{t('discuss.title')}</div>
 
         <div className="big" style={{ marginTop: 8 }}>
-          Put the phone down.
+          {t('discuss.putDown')}
         </div>
 
         <div className="muted" style={{ marginTop: 10 }}>
-          Revealing is complete. Now discuss together and find the imposter(s).
+          {t('discuss.desc')}
         </div>
 
         <div
@@ -23,23 +26,23 @@ export default function DiscussScreen({ derived, actions }) {
             background: 'rgba(255,255,255,0.05)',
           }}
         >
-          <div style={{ fontWeight: 800 }}>Quick reminder</div>
+          <div style={{ fontWeight: 800 }}>{t('discuss.reminderTitle')}</div>
           <div className="muted" style={{ marginTop: 6 }}>
-            Don’t say the secret word out loud. Ask questions and listen for bluffing.
+            {t('discuss.reminderText')}
           </div>
         </div>
 
         <div className="row" style={{ marginTop: 16 }}>
           <button className="btn primary" type="button" onClick={actions.viewResults}>
-            View results
+            {t('discuss.viewResults')}
           </button>
           <button className="btn ghost" type="button" onClick={actions.goSetup}>
-            Back to setup
+            {t('discuss.backSetup')}
           </button>
         </div>
 
         <div className="muted" style={{ marginTop: 12 }}>
-          Players: <b>{derived.total}</b>
+          {t('discuss.players', { total: derived.total })}
         </div>
       </div>
     </div>
