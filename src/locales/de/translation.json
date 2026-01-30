@@ -22,7 +22,7 @@
     "resetMsg": "Dadurch wird die aktuelle Runde gelöscht und du gehst zurück zum Setup.",
     "cancel": "Abbrechen",
     "confirmReset": "Zurücksetzen",
-    "close": "Dialog schließen"
+    "close": "schließen"
   },
   "setup": {
     "title": "Spiel einstellen",
@@ -30,7 +30,7 @@
     "players": "Spieler",
     "imposters": "Imposter",
     "tokenHintOn": "TOKEN-Modus AN: Spezialrollen aktiv",
-    "surpriseHintOn": "Überraschungsmodus AN: Imposter werden zufällig gewählt",
+    "surpriseHintOn": "Überraschungsmodus AN: Imposter zahl werden zufällig gewählt",
     "impostersHint": "Wähle, wie viele Imposter in der Runde sind.",
     "surpriseMode": "Überraschungs- modus",
     "tokenMode": "Token-Modus",
@@ -59,10 +59,10 @@
       "intro": "Ein schnelles Partyspiel: Die meisten Spieler haben dasselbe geheime Wort. Imposter nicht.",
       "s1Title": "Runde einstellen:",
       "s1Body": "Spieler wählen, Namen eintragen und festlegen, wie viele Imposter dabei sind.",
-      "s1Note": "Wenn der Überraschungsmodus AN ist, werden Imposter in jeder Runde zufällig bestimmt (1–Spieler).",
+      "s1Note": "Wenn der Überraschungsmodus AN ist, Die Anzahl der Imposter wird zufällig ausgewählt (1 bis viele Imposters).",
       "s2Title": "Optional: Token-Modus",
       "s2Body": "fügt Spezialrollen (Tokens) hinzu:",
-      "detective": "Der Detektiv 🕵️ — am Ende darfst du einem Spieler eine zusätzliche Frage stellen. Diese Rolle musst du beim Aufdecken der Gruppe ansagen.",
+      "detective": "Der Detektiv 🕵️ — Am Ende kannst du einem Spieler deiner Wahl zusätzliche Fragen stellen. Diese Rolle musst du beim Aufdecken der Gruppe ansagen.",
       "fox": "Der Fuchs 🦊 — du gewinnst, wenn du rausgewählt wirst. Rolle geheim halten – pssst…🤐.",
       "mouse": "Die Leise Maus 🐭 — in der ersten Diskussionsrunde darfst du einmal stumm passen. Diese Rolle musst du beim Aufdecken der Gruppe ansagen.",
       "s3Title": "Wort wählen:",
@@ -73,7 +73,7 @@
       "s5Title": "Diskutieren:",
       "s5Body": "Redet der Reihe nach als Gruppe und findet die Imposter. Beschreibt das Wort, ohne es direkt zu sagen. Stellt Fragen und achtet auf Bluffen.",
       "s6Title": "Abstimmen:",
-      "s6Body": "Wenn ihr bereit seid, einigt euch, wer Imposter ist, und schaut euch das Ergebnis an.",
+      "s6Body": "Sobald jeder die Gelegenheit hatte zu äußern und die Mehrheit zustimmt, werden die Imposter benannt und die Ergebnisse bekannt gegeben. Imposter gewinnen, indem sie nicht identifiziert werden oder das Wort laut aussprechen, bevor sie abgewählt werden.",
       "houseRules": "Spaß-Regeln:",
       "houseRulesBody": "jeder muss einmal sprechen • keine Buchstaben-/Rechtschreibfragen • keine exakten Synonyme."
     },

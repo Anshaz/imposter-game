@@ -22,7 +22,7 @@
     "resetMsg": "This will clear the current round and go back to setup.",
     "cancel": "Cancel",
     "confirmReset": "Reset",
-    "close": "Close dialog"
+    "close": "Close"
   },
   "setup": {
     "title": "Game setup",
@@ -59,10 +59,10 @@
       "intro": "A quick party game: most players share the same secret word. Imposters don’t.",
       "s1Title": "Set up the round:",
       "s1Body": "choose Players, enter names, and pick how many Imposters.",
-      "s1Note": "If Surprise mode is ON, the game randomizes imposters each round (1–players).",
+      "s1Note": "If Surprise mode is ON, the game randomizes the imposters count (at least one or several).",
       "s2Title": "Optional: Token mode",
       "s2Body": "adds special roles (tokens):",
-      "detective": "The Detective 🕵️ — at the end, you may ask one extra question to any player. You must announce this role to the group during your card reveal.",
+      "detective": "The Detective 🕵️ — at the end, you may ask extra questions to any one player of your choice. You must announce this role to the group during your card reveal.",
       "fox": "The Fox 🦊 — you win if you get voted out. Keep this role secret Shhh...🤐.",
       "mouse": "The Quiet Mouse 🐭 — during the first discussion round, you may silently pass your turn once. You must announce this role to the group during your card reveal.",
       "s3Title": "Choose the word:",
@@ -73,7 +73,7 @@
       "s5Title": "Discuss:",
       "s5Body": "serially talk as a group to find the imposter(s). Describe the word without saying it directly. Ask each other questions to spot who’s bluffing.",
       "s6Title": "Vote:",
-      "s6Body": "when ready, agree on who the imposter is and reveal the results.",
+      "s6Body": "After everyone has had a chance to speak & majority agrees, call out the imposter(s) and reveal the results. Imposters win by avoiding detection or saying the word out loud before being voted out.",
       "houseRules": "Fun house rules:",
       "houseRulesBody": "everyone must speak once • no spelling/letter questions • no exact synonyms."
     },

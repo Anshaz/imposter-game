@@ -9,6 +9,7 @@ export default function SetupScreen({ state, actions }) {
   const { t } = useTranslation()
   const maxPlayers = 20
   const [howOpen, setHowOpen] = useState(false)
+  const [attemptedContinue, setAttemptedContinue] = useState(false)
 
   const TOKEN_MODE_INFO = (
     <div style={{ display: 'grid', gap: 10, textAlign: 'left' }}>
@@ -40,7 +41,11 @@ export default function SetupScreen({ state, actions }) {
   )
 
   const rawSetupError = useMemo(() => {
-    return validateSetup({ players: state.players, imposters: state.imposters, names: state.names })
+    return validateSetup({
+      players: state.players,
+      imposters: state.imposters,
+      names: state.names,
+    })
   }, [state.players, state.imposters, state.names])
 
   const setupError = useMemo(() => {
@@ -56,6 +61,13 @@ export default function SetupScreen({ state, actions }) {
   }, [rawSetupError, t])
 
   const canContinue = !setupError
+  const showError = attemptedContinue && !!setupError
+
+  const onContinue = () => {
+    setAttemptedContinue(true)
+    if (!canContinue) return
+    actions.goWord()
+  }
 
   return (
     <div className="card">
@@ -75,7 +87,10 @@ export default function SetupScreen({ state, actions }) {
         value={state.players}
         min={2}
         max={maxPlayers}
-        onChange={actions.setPlayers}
+        onChange={(v) => {
+          setAttemptedContinue(false)
+          actions.setPlayers(v)
+        }}
         hint={state.tokenMode ? t('setup.tokenHintOn') : []}
       />
 
@@ -85,7 +100,10 @@ export default function SetupScreen({ state, actions }) {
         displayValue={state.surpriseMode ? `` : state.imposters}
         min={1}
         max={Math.max(1, state.players)}
-        onChange={actions.setImposters}
+        onChange={(v) => {
+          setAttemptedContinue(false)
+          actions.setImposters(v)
+        }}
         disabled={state.surpriseMode}
         hint={state.surpriseMode ? t('setup.surpriseHintOn') : t('setup.impostersHint')}
       />
@@ -106,7 +124,10 @@ export default function SetupScreen({ state, actions }) {
             <button
               type="button"
               className={'toggle' + (state.surpriseMode ? ' on' : '')}
-              onClick={() => actions.setSurpriseMode(!state.surpriseMode)}
+              onClick={() => {
+                setAttemptedContinue(false)
+                actions.setSurpriseMode(!state.surpriseMode)
+              }}
               aria-pressed={state.surpriseMode}
               aria-label={t('setup.toggleSurpriseAria')}
             >
@@ -124,6 +145,7 @@ export default function SetupScreen({ state, actions }) {
               type="button"
               className={'toggle' + (state.tokenMode ? ' on' : '')}
               onClick={() => {
+                setAttemptedContinue(false)
                 const next = !state.tokenMode
                 actions.setTokenMode(next)
 
@@ -155,24 +177,33 @@ export default function SetupScreen({ state, actions }) {
       </div>
 
       <div className="sectionTitle">{t('setup.playerNames')}</div>
-      <PlayerListEditor players={state.players} names={state.names} onChangeName={actions.setName} />
+      <PlayerListEditor
+        players={state.players}
+        names={state.names}
+        onChangeName={(idx, name) => {
+          setAttemptedContinue(false)
+          actions.setName(idx, name)
+        }}
+      />
 
-      {setupError ? <div className="errorBox">{setupError}</div> : null}
+      {/* Show only after user tried to continue */}
+      {showError ? <div className="errorBox">{setupError}</div> : null}
 
       <div className="row" style={{ marginTop: 16 }}>
         <button
           className="btn primary"
           type="button"
-          onClick={actions.goWord}
-          disabled={!canContinue}
+          onClick={onContinue}
           title={!canContinue ? t('setup.continueTitleDisabled') : t('setup.continueTitleEnabled')}
         >
           {t('setup.continue')}
         </button>
+
         <button
           className="btn ghost"
           type="button"
           onClick={() => {
+            setAttemptedContinue(false)
             actions.setPlayers(2)
             actions.setSurpriseMode(false)
             actions.setTokenMode(false)
