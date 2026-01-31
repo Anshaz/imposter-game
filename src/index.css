@@ -235,7 +235,7 @@ input[type='number'],
 input[type='text'],
 select {
   padding: 14px 16px;
-  border-radius: 16px;
+  border-radius: 5px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
   color: var(--white);
@@ -247,9 +247,34 @@ select {
 }
 
 
+.chooseWordSelect .selectField { border-radius: 2px; }
 
 /* Select (dropdown) styling */
-select {
+
+.selectWrap {
+  position: relative;
+}
+
+.selectWrap .selectField {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 44px; /* space for the caret */
+}
+
+.selectCaret {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.75;
+  font-size: 14px;
+}
+
+/* select {
   cursor: pointer;
   padding-right: 44px;
   -webkit-appearance: none;
@@ -267,7 +292,7 @@ select {
     6px 6px,
     1px 28px;
   background-repeat: no-repeat;
-}
+} */
 
 input[type='number']:focus,
 input[type='text']:focus,

@@ -125,7 +125,7 @@
     "tokens": {
       "detective": {
         "name": "Der Detektiv",
-        "desc": "Am Ende der Runde darfst du einen Spieler befragen (1 zusätzliche Frage).",
+        "desc": "Am Ende der Runde darfst du einen Spieler deiner Wahl befragen.",
         "inst": "Sage diese Rolle jetzt der Gruppe an."
       },
       "fox": {

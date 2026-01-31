@@ -125,7 +125,7 @@
     "tokens": {
       "detective": {
         "name": "The Detective",
-        "desc": "At the end of the round, you may question one player (1 extra question).",
+        "desc": "At the end of the round, you may question any one player of your choice.",
         "inst": "Announce this role to the group now."
       },
       "fox": {

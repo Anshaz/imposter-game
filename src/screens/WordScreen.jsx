@@ -34,22 +34,22 @@ export default function WordScreen({ state, actions }) {
           <div className="muted" style={{ marginBottom: 12 }}>
             {t('word.randomDesc')}
           </div>
-
-          <SelectField
-            label={t('word.wordPack')}
-            value={state.packId}
-            onChange={actions.setPack}
-            options={options}
-            hint={t('word.meta', { desc: meta.description, count: meta.count })}
-            right={
-              <span className="pill">
-                {state.packId === 'all'
-                  ? t('word.packsPillMany', { count: WORD_PACKS.length + 1 })
-                  : t('word.packsPillOne')}
-              </span>
-            }
-          />
-
+          <div className="chooseWordSelect">
+            <SelectField
+              label={t('word.wordPack')}
+              value={state.packId}
+              onChange={actions.setPack}
+              options={options}
+              hint={t('word.meta', { desc: meta.description, count: meta.count })}
+              right={
+                <span className="pill">
+                  {state.packId === 'all'
+                    ? t('word.packsPillMany', { count: WORD_PACKS.length + 1 })
+                    : t('word.packsPillOne')}
+                </span>
+              }
+            />
+          </div>
           <button
             type="button"
             className="btn primary btn--random"
