@@ -638,7 +638,7 @@ select:focus {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: linear-gradient(135deg, #f13535d9, var(--accent-light));
   display: flex;
   align-items: center;
   justify-content: center;
